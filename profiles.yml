@@ -1,0 +1,6 @@
+dbt_sample_duckdb:
+  outputs:
+    go_sales:
+      type: duckdb
+      path: '/home/u001/dbt-core-sample-duckdb/go_sales.db'
+  target: go_sales

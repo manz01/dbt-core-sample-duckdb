@@ -6,7 +6,7 @@ Description:    Raw model for the GO Sales data go_retailers
 Input(s):       msql go_sales.go_retailers
 Output(s):      raw.t_raw_go_retailers
 Author:         Manzar Ahmed
-First Created:  Feb 2025
+First Created:  Jun 2025
 --------------------------------------------------------------------------------
 Program history:
 --------------------------------------------------------------------------------

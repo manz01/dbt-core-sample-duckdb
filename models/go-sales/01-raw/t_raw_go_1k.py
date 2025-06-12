@@ -6,7 +6,7 @@ Description:    Staging model for the GO Sales data go_1k
 Input(s):       msql go_sales.go_1k
 Output(s):      raw.t_raw_go_1k
 Author:         Manzar Ahmed
-First Created:  Feb 2025
+First Created:  Jun 2025
 --------------------------------------------------------------------------------
 Program history:
 --------------------------------------------------------------------------------

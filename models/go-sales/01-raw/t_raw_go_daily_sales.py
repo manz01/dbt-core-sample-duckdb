@@ -6,7 +6,7 @@ Description:    Raw model for the GO Sales data go_daily_sales
 Input(s):       msql go_sales.go_daily_sales
 Output(s):      raw.t_raw_go_daily_sales
 Author:         Manzar Ahmed
-First Created:  Feb 2025
+First Created:  Jun 2025
 --------------------------------------------------------------------------------
 Program history:
 --------------------------------------------------------------------------------

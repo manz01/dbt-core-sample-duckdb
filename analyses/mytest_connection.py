@@ -17,10 +17,10 @@ conn = mysql.connector.connect(**config)
 cursor = conn.cursor()
 
 # Example SQL query (change as needed)
-sql_query = "SELECT * FROM go_1k LIMIT 10"  # Replace with actual table name
+SQL_QUERY = "SELECT * FROM go_1k LIMIT 10"  # Replace with actual table name
 
 # Use pandas to read into DataFrame
-df = pd.read_sql(sql_query, conn)
+df = pd.read_sql(SQL_QUERY, conn)
 
 # Display result
 print(df)

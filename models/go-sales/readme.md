@@ -56,3 +56,10 @@ dbt_run_go_sales --select tag:GO_SALES_RAW
 alias dbt_run_go_sales='dbt run --project-dir $DBT_PROJ_DIR --profiles-dir $DBT_PROFILE_DIR --target go_sales'
 dbt_run_go_sales --select tag:GO_SALES_STG
 ```
+
+## Detailed Models
+
+```sh
+alias dbt_run_go_sales='dbt run --project-dir $DBT_PROJ_DIR --profiles-dir $DBT_PROFILE_DIR --target go_sales'
+dbt_run_go_sales --select tag:GO_SALES_DET
+```

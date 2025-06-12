@@ -2,3 +2,9 @@
 target/
 dbt_packages/
 logs/
+go_sales.db
+~README.md.saved.bak
+.sqlfluff
+go_sales.db
+package-lock.yml
+go_sales.db

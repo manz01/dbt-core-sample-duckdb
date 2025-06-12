@@ -37,3 +37,10 @@ models:
     02-stg:
       +schema: stg
       +materialized: view
+    03-det:
+      +schema: det
+      +materialized: incremental
+      +incremental_strategy: merge
+    04-mrt:
+      +schema: mrt
+      +materialized: table

@@ -1,0 +1,24 @@
+"""
+--------------------------------------------------------------------------------
+Program:        t_raw_go_daily_sales
+Project:        duckdb-core-sample-go-sales
+Description:    Raw model for the GO Sales data go_daily_sales
+Input(s):       msql go_sales.go_daily_sales
+Output(s):      raw.t_raw_go_daily_sales
+Author:         Manzar Ahmed
+First Created:  Feb 2025
+--------------------------------------------------------------------------------
+Program history:
+--------------------------------------------------------------------------------
+Date        Programmer             Description
+----------  ---------------------  ---------------------------------------------
+2025-06-11  Manzar Ahmed           v0.01/Initial version
+--------------------------------------------------------------------------------
+"""
+
+from shared_utils.db_utils import db_query
+
+def model(dbt, session):
+    sql = dbt.config.get('sql')
+    df = db_query(sql, 'GOSales')
+    return df

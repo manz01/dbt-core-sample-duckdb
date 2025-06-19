@@ -18,7 +18,11 @@ Date        Programmer             Description
 
 from shared_utils.db_utils import db_query
 
-def model(dbt, session):
+def model(dbt, session):  # pylint: disable=unused-argument
+    """
+    Executes a SQL query against the 'GOSales' database using the provided SQL 
+    from dbt configuration,and returns the result as a DataFrame.
+    """
     sql = dbt.config.get('sql')
     df = db_query(sql, 'GOSales')
     return df

@@ -2,6 +2,20 @@ import mysql.connector
 import pandas as pd
 
 def db_query(sql: str, database: str) -> pd.DataFrame:
+    """
+    Executes a SQL query on the specified database and returns the result as a pandas DataFrame.
+
+    Args:
+        sql (str): The SQL query to execute.
+        database (str): The name of the database to connect to. Supported values are keys in the config_map.
+
+    Returns:
+        pd.DataFrame: The result of the SQL query.
+
+    Raises:
+        ValueError: If the specified database is not supported.
+    """
+    
     config_map = {
         'GOSales': {
             'host': 'relational.fel.cvut.cz',

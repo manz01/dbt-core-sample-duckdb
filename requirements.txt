@@ -1,7 +1,6 @@
 # Core dbt and adapters
 dbt-core==1.9.6
 dbt-duckdb==1.9.3  
-dbt-mysql==1.9.2   
 
 # MySQL connectivity (via mysql-connector-python)
 mysql-connector-python==9.3.0

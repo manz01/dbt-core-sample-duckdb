@@ -7,7 +7,7 @@ config = {
     'port': 3306,
     'user': 'guest',
     'password': 'ctu-relational',
-    'database': 'GOSales',  # ✅ use this actual database name
+    'database': 'GOSales',  
 }
 
 # Establish connection

@@ -2,7 +2,7 @@
 Program:        t_stg_go_daily_sales
 Project:        duckdb-core-sample-go-sales
 Description:    Staging model for GO Sales products daily sales
-                 with raw data from source
+                with raw data from source
 Input(s):       raw.t_raw_go_daily_sales
 Output(s):      stg.t_stg_go_daily_sales
 Author:         Manzar Ahmed

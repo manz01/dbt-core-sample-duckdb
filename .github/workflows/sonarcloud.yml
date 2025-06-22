@@ -29,7 +29,7 @@ jobs:
       uses: SonarSource/sonarcloud-github-action@v2
       with:
         args: >
-          -Dsonar.projectKey=go-sales
-          -Dsonar.organization=your-org-name
+          -Dsonar.projectKey=manz01_dbt-core-sample-duckdb
+          -Dsonar.organization=manz01
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

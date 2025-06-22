@@ -1,3 +1,4 @@
+[![Pylint](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/pylint.yml/badge.svg)](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/pylint.yml)
 # Go Sales
 
 ### Document Control

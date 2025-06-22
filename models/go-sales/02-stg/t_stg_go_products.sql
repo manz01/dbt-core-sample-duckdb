@@ -2,7 +2,7 @@
 Program:        t_stg_go_products
 Project:        duckdb-core-sample-go-sales
 Description:    Staging model for GO Sales products
-                 with raw data from source
+                with raw data from source
 Input(s):       raw.t_raw_go_products
 Output(s):      stg.t_stg_go_products
 Author:         Manzar Ahmed

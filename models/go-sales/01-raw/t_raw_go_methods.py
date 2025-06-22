@@ -18,7 +18,7 @@ Date        Programmer             Description
 
 from shared_utils.db_utils import db_query
 
-def model(dbt, session):  # pylint: disable=unused-argument
+def model(dbt, session):  # pylint: disable=unused-argument # noqa: ARG001
     """
     Executes a SQL query against the 'GOSales' database using the provided SQL 
     from dbt configuration,and returns the result as a DataFrame.

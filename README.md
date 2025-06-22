@@ -2,7 +2,8 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=manz01_dbt-core-sample-duckdb&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=manz01_dbt-core-sample-duckdb)
 > ✅ **CI/CD Integration**: This repository now includes static code analysis via [Pylint](https://pylint.pycqa.org/) and quality gate validation via [SonarCloud](https://sonarcloud.io/summary/new_code?id=manz01_dbt-core-sample-duckdb), which run automatically on push and pull request events. These checks ensure Python code quality, maintainability, and technical debt are continuously monitored.
 
-# Go Sales
+# Go Sales DuckDB dbt Sample Project
+This repository contains a sample dbt project that demonstrates how to model and transform the GO Sales IBM sample data using dbt (data build tool) with DuckDB as the database engine. 
 
 ### Document Control
 |Version|Date|Author|Description of Change|

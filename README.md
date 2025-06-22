@@ -1,4 +1,4 @@
-[![Pylint](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/pylint.yml/badge.svg)](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/pylint.yml)
+[![Pylint](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/pylint.yml/badge.svg)](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/pylint.yml)[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=manz01_dbt-core-sample-duckdb&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=manz01_dbt-core-sample-duckdb)
 # Go Sales
 
 ### Document Control

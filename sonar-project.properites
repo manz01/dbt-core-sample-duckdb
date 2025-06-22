@@ -1,0 +1,8 @@
+# sonar-project.properties
+
+sonar.projectKey=go-sales
+sonar.projectName=GO Sales Data Warehouse
+sonar.sources=.
+sonar.language=py
+sonar.python.version=3.10
+sonar.sourceEncoding=UTF-8

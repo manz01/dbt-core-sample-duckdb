@@ -23,10 +23,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint pandas mysql-connector-python
     
-    - name: Install requirements
-      run: |
-        pip install -r requirements.txt
-
     - name: Run pylint
       run: |
         pylint $(git ls-files '*.py')

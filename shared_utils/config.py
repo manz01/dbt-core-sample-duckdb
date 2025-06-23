@@ -1,3 +1,6 @@
+import json
+import os
+
 """
 Configuration utility to provide database connection settings.
 """
@@ -16,15 +19,14 @@ def get_db_config(database: str) -> dict:
     Raises:
         ValueError: If the specified database is not supported.
     """
-    config_map = {
-        'GOSales': {
-            'host': 'relational.fel.cvut.cz',
-            'port': 3306,
-            'user': 'guest',
-            'password': 'ctu-relational',
-            'database': 'GOSales',
-        },
-    }
+    config_path = os.path.join(
+        os.path.dirname(os.path.dirname(__file__)),
+        "credentials",
+        "go-sales.json"
+    )
+
+    with open(config_path, "r") as f:
+        config_map = json.load(f)
 
     if database not in config_map:
         raise ValueError(f"Unsupported database: {database}")

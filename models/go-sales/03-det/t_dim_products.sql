@@ -15,6 +15,9 @@ Date        Programmer             Description
 2025-06-11  Manzar Ahmed           v0.01/Initial version
 2025-06-23  Manzar Ahmed           v0.02/Utilising SCD2 vars for start and end 
                                    timestamps
+2025-06-23  Manzar Ahmed           v0.03/SonarQube issues fixed:  
+                                   Define a constant instead of duplicating this 
+                                   literal 5 times (plsql:S1192)                                
 -------------------------------------------------------------------------------*/
 {{ config(
     materialized = 'incremental',
@@ -23,10 +26,11 @@ Date        Programmer             Description
     pre_hook = ["create sequence if not exists seq_dim_product_sk start 1 increment 1"]
 ) }}
 
+
 {% set vars = get_scd2_vars() %}
-{% set start_ts = vars.start_ts %}
-{% set end_ts = vars.end_ts %}
-{% set high_date = vars.high_date %}
+{% set start_ts = "('" ~ vars.start_ts ~ "')::timestamp" %}
+{% set end_ts = "('" ~ vars.end_ts ~ "')::timestamp" %}
+{% set high_date_ts = "('" ~ vars.high_date ~ "')::timestamp" %}
 
 with current_data as (
     select  product_number,
@@ -65,7 +69,7 @@ existing_records as (
             start_ts,
             end_ts
     from    {{ this }}
-    where   end_ts = ('{{ high_date }}')::timestamp
+    where   end_ts = {{ high_date_ts }}
 ),
 
 ordered_changes as (
@@ -97,8 +101,8 @@ changes as (
                 oc.unit_cost,
                 oc.unit_price,
                 oc.scd2_hash,
-                ('{{ start_ts }}')::timestamp as start_ts,
-                ('{{ high_date }}')::timestamp as end_ts
+                {{ start_ts }} as start_ts,
+                {{ high_date_ts }} as end_ts
     from        ordered_changes oc
 ),
 
@@ -114,17 +118,17 @@ updates as (
                 e.unit_price,
                 e.scd2_hash,
                 e.start_ts,
-                ('{{ end_ts }}')::timestamp as end_ts
+                {{ end_ts }} as end_ts
     from        existing_records e
     join        changes c
     on          e.product_number = c.product_number
-    where       e.end_ts = ('{{ high_date }}')::timestamp
+    where       e.end_ts = {{ high_date_ts }}
 ),
 
 unchanged_history as (
     select *
     from {{ this }}
-    where end_ts != ('{{ high_date }}')::timestamp
+    where end_ts != {{ high_date_ts }}
 )
 
 select * from changes
@@ -145,8 +149,8 @@ select  nextval('seq_dim_product_sk') as dim_product_sk,
         unit_cost,
         unit_price,
         scd2_hash,
-        ('{{ start_ts }}')::timestamp as start_ts,
-        ('{{ high_date }}')::timestamp as end_ts
+        {{ start_ts }} as start_ts,
+        {{ high_date_ts }} as end_ts
 from    current_data
 order by product_number
 

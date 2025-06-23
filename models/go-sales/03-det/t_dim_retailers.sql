@@ -14,6 +14,9 @@ Date        Programmer             Description
 2025-06-11  Manzar Ahmed           v0.01/Initial version
 2025-06-23  Manzar Ahmed           v0.02/Utilising SCD2 vars for start and end 
                                    timestamps
+2025-06-23  Manzar Ahmed           v0.03/SonarQube issues fixed:  
+                                   Define a constant instead of duplicating this 
+                                   literal 5 times (plsql:S1192)                                   
 -------------------------------------------------------------------------------*/
 
 {{ config(
@@ -24,9 +27,9 @@ Date        Programmer             Description
 ) }}
 
 {% set vars = get_scd2_vars() %}
-{% set start_ts = vars.start_ts %}
-{% set end_ts = vars.end_ts %}
-{% set high_date = vars.high_date %}
+{% set start_ts = "('" ~ vars.start_ts ~ "')::timestamp" %}
+{% set end_ts = "('" ~ vars.end_ts ~ "')::timestamp" %}
+{% set high_date_ts = "('" ~ vars.high_date ~ "')::timestamp" %}
 
 with current_data as (
     select  retailer_code,
@@ -52,7 +55,7 @@ existing_records as (
                 start_ts,
                 end_ts
     from        {{ this }}
-    where       end_ts = ('{{ high_date }}')::timestamp
+    where       end_ts = {{ high_date_ts }}
 ),
 
 ordered_changes as (
@@ -76,8 +79,8 @@ changes as (
             oc.type,
             oc.country,
             oc.scd2_hash,
-            ('{{ start_ts }}')::timestampas start_ts,
-            ('{{ high_date }}')::timestamp as end_ts
+            {{ start_ts }} start_ts,
+            {{ high_date_ts }} as end_ts
     from    ordered_changes oc
 ),
 
@@ -93,13 +96,13 @@ updates as (
     from    existing_records e
     join    changes c
     on      e.retailer_code = c.retailer_code
-    where   e.end_ts = ('{{ high_date }}')::timestamp
+    where   e.end_ts = {{ high_date_ts }}
 ),
 
 unchanged_history as (
     select *
     from {{ this }}
-    where end_ts != ('{{ high_date }}')::timestamp
+    where end_ts != {{ high_date_ts }}
 )
 
 select * from changes
@@ -116,8 +119,8 @@ select      nextval('seq_dim_retailer_sk') as dim_retailer_sk,
             type,
             country,
             scd2_hash,
-            ('{{ start_ts }}')::timestamp  as start_ts,
-            ('{{ high_date }}')::timestamp as end_ts
+            {{ start_ts }}  as start_ts,
+            {{ high_date_ts }}as end_ts
 from        current_data
 order by    retailer_code
 

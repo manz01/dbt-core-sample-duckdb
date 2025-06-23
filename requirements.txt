@@ -1,4 +1,4 @@
---extra-index-url https://pypi.fury.io/dbt/
+--extra-index-url https://__token__:@pypi.fury.io/dbt/
 
 # Core dbt and adapters
 dbt-core==1.9.6

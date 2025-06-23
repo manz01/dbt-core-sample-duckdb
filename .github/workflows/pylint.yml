@@ -25,7 +25,10 @@ jobs:
         pip install pytest pytest-cov
         pip install pandas
         pip install mysql-connector-python
-
+        
+    - name: Set PYTHONPATH
+      run: echo "PYTHONPATH=${{ github.workspace }}" >> $GITHUB_ENV
+      
     - name: Run pylint
       run: |
         pylint $(git ls-files '*.py')

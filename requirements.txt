@@ -1,3 +1,5 @@
+--extra-index-url https://pypi.fury.io/dbt/
+
 # Core dbt and adapters
 dbt-core==1.9.6
 dbt-duckdb==1.9.3  

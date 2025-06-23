@@ -9,3 +9,4 @@ go_sales.db
 package-lock.yml
 go_sales.db
 analyses/mytest_connection.py
+lld.md

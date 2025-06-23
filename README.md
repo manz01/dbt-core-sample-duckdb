@@ -1,5 +1,6 @@
 [![Pylint](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/pylint.yml/badge.svg)](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/pylint.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=manz01_dbt-core-sample-duckdb&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=manz01_dbt-core-sample-duckdb)
+<br>
 <img alt="SQL" src="https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=sqlite&logoColor=white" height="25px"/>
 <img alt="dbt" src="https://img.shields.io/badge/dbt-FD6D6D?style=for-the-badge&logo=dbt&logoColor=white" height="25px"/>
 <img alt="DuckDB" src="https://img.shields.io/badge/DuckDB-FFF500?style=for-the-badge&logo=duckduckgo&logoColor=black" height="25px"/>

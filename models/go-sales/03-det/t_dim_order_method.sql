@@ -34,7 +34,7 @@ with source_data as (
 
 {% if is_incremental() %}
 
-    , existing_data as (
+    ,existing_data as (
         select
             order_method_code,
             order_method_type,
@@ -42,8 +42,7 @@ with source_data as (
             create_ts,
             update_ts
         from {{ this }}
-    ),
-
+    )
     , new_or_changed as (
         select
             s.order_method_code,

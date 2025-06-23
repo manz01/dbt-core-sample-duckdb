@@ -1,5 +1,3 @@
---extra-index-url https://__token__:@pypi.fury.io/dbt/
-
 # Core dbt and adapters
 #dbt-core==1.9.6        failed to install due to dependency issues
 #dbt-duckdb==1.9.3      failed to install due to dependency issues

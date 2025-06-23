@@ -28,6 +28,10 @@ jobs:
     - name: Set PYTHONPATH
       run: echo "PYTHONPATH=${{ github.workspace }}" >> $GITHUB_ENV
       
+    - name: Run tests with coverage
+      run: |
+        pytest --cov=shared_utils --cov=models/go-sales --cov-report=xml
+
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@v2
       with:

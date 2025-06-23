@@ -16,15 +16,17 @@ This repository contains a sample dbt project that demonstrates how to model and
 |1.0|2025-05-18|Manzar Ahmed|Initial Version|
 |1.1|2025-06-12|Manzar Ahmed|Added DET and MRT model sections|
 |1.2|2025-06-22|Manzar Ahmed|Added section with dbt docs|
+|1.3|2025-06-23|Manzar Ahmed|Added section High level design|
 
 ## Table of Content
 - [1. Background](#1-background)
-- [2. Run dbt Models](#2-run-dbt-models)
-  - [2.1. Raw Models](#21-raw-models)
-  - [2.2. Staging Models](#22-staging-models)
-  - [2.3. Detailed Models (DET)](#23-detailed-models-det)
-  - [2.4. Mart Models (MRT)](#24-mart-models-mrt)
-- [3. Visualize Lineage with dbt Docs](#3-visualize-lineage-with-dbt-docs)
+- [2. High Level Design](#2-high-level-design)
+- [3. Run dbt Models](#3-run-dbt-models)
+  - [3.1. Raw Models](#31-raw-models)
+  - [3.2. Staging Models](#32-staging-models)
+  - [3.3. Detailed Models (DET)](#33-detailed-models-det)
+  - [3.4. Mart Models (MRT)](#34-mart-models-mrt)
+- [4. Visualize Lineage with dbt Docs](#4-visualize-lineage-with-dbt-docs)
 
 >NOTE: This sample project utlizes the [GO Sales IBM sample data](https://dataplatform.cloud.ibm.com/exchange/public/entry/view/dcf7b09bd340e6ff9a2d1869631f3753) to demonstrate dbt modeling techniques. It is designed to be run with DuckDB as the database engine, but can be adapted for other engines like Snowflake, BigQuery, or Redshift with minor modifications to the dbt profiles and SQL syntax. The GO Sales dataset is a fictional retail dataset that simulates sales operations for a global retailer, and available under the MIT License. 
 
@@ -68,8 +70,34 @@ The GO Sales IBM sample data is a fictional retail dataset designed to demonstra
 * Type: Type of retailer store
 * Country: Retailer store's country of origin
 
+## 2. High Level Design
 
-## 2. Run dbt Models
+The dbt-core project follows a **layered design architecture** that systematically structures data transformations through a series of increasingly refined stages. This layered approach promotes modularity, reusability, and transparency in the data pipeline.
+
+![High Level Design](./markdown_images/hld-duckdb-dbt-sample.png)
+
+### Layer Breakdown:
+
+1. **Raw Layer (`raw`)**  
+   - This layer ingests raw data directly from the **MySQL DB instance**.
+   - It performs minimal transformation (if any), mainly focused on standardizing data types and storing source extracts as-is.
+
+2. **Staging Layer (`stg`)**  
+   - This layer acts as a clean-up zone where raw data is normalized, renamed, and prepared for further transformation.
+   - Typical operations include renaming columns to snake_case, handling nulls, and deduplicating rows.
+
+3. **Detailed Layer (`det`)**  
+   - This is the business logic layer, where transformations are applied to derive meaningful metrics and dimensions.
+   - It includes joins, surrogate key generation, Slowly Changing Dimensions (SCD), and other enrichment logic.
+
+4. **Mart Layer (`mrt`)**  
+   - This final layer presents the data in a business-consumable format.
+   - It aggregates and filters data for reporting, dashboards, and analytics use cases.
+
+Each layer feeds into the next, ensuring that transformations are traceable and logically separated. 
+
+
+## 3. Run dbt Models
 
 **Create Aliases & Global Vars**
 
@@ -83,31 +111,31 @@ export PYTHONPATH=$DBT_PROJ_DIR
 ```sh
 alias dbt_run_go_sales='dbt run --project-dir $DBT_PROJ_DIR --profiles-dir $DBT_PROFILE_DIR --target go_sales'
 ```
-### 2.1. Raw Models
+### 3.1. Raw Models
 
 ```sh
 dbt_run_go_sales --select tag:GO_SALES_RAW
 ```
 
-### 2.2. Staging Models
+### 3.2. Staging Models
  
 ```sh
 dbt_run_go_sales --select tag:GO_SALES_STG
 ```
 
-### 2.3. Detailed Models (DET)
+### 3.3. Detailed Models (DET)
 
 ```sh
 dbt_run_go_sales --select tag:GO_SALES_DET
 ```
 
-### 2.4. Mart Models (MRT)
+### 3.4. Mart Models (MRT)
 
 ```sh
 dbt_run_go_sales --select tag:GO_SALES_MRT
 ```
 
-## 3. Visualize Lineage with dbt Docs
+## 4. Visualize Lineage with dbt Docs
 
 dbt provides an interactive lineage graph that visually represents how models are built from raw data through staging, transformation, and into marts. This helps developers, analysts, and stakeholders understand data dependencies and relationships.
 

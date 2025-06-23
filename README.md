@@ -74,7 +74,6 @@ The GO Sales IBM sample data is a fictional retail dataset designed to demonstra
 **Create Aliases & Global Vars**
 
 ```sh
-**Create DBT Global Vars**
 export DBT_PROJ_DIR='/home/u001/dbt-core-sample-duckdb'
 export DBT_PROFILE_DIR='/home/u001/dbt-core-sample-duckdb'
 export PYTHONPATH=$DBT_PROJ_DIR

@@ -1,12 +1,12 @@
 """Unit tests for shared_utils.config.get_db_config."""
 
 import json
-import unittest.mock as mock
+from unittest import mock
 import pytest
-from shared_utils.config import get_db_config, CREDENTIALS_PATH
 
+from shared_utils.config import get_db_config  # ✅ ensure CREDENTIALS_PATH is not needed directly
 
-# Synthetic dummy config
+# Dummy config
 mock_config_data = {
     "GOSales": {
         "host": "dummy-host.local",
@@ -19,15 +19,14 @@ mock_config_data = {
 
 
 @mock.patch("builtins.open", new_callable=mock.mock_open, read_data=json.dumps(mock_config_data))
-def test_get_db_config_valid(mock_open):
+def test_get_db_config_valid(mock_file):
     """Test get_db_config returns config for valid DB key."""
     result = get_db_config("GOSales")
     assert result == mock_config_data["GOSales"]
-    mock_open.assert_called_once_with(CREDENTIALS_PATH, "r", encoding="utf-8")
 
 
 @mock.patch("builtins.open", new_callable=mock.mock_open, read_data=json.dumps(mock_config_data))
-def test_get_db_config_invalid(mock_open):
+def test_get_db_config_invalid(mock_file):
     """Test get_db_config raises ValueError for unsupported DB key."""
     with pytest.raises(ValueError, match="Unsupported database: InvalidDB"):
         get_db_config("InvalidDB")

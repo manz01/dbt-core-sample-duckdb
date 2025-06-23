@@ -37,10 +37,3 @@ jobs:
       run: |
         pytest --cov=shared_utils --cov-report=xml
 
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@v2
-      with:
-        projectBaseDir: .
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: https://sonarcloud.io

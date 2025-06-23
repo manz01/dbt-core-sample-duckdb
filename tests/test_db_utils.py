@@ -2,7 +2,7 @@
 
 from unittest import mock
 import pandas as pd
-from shared_utils.db_query import db_query
+from shared_utils.db_utils import db_query
 from tests.test_data import mock_config_data
 
 

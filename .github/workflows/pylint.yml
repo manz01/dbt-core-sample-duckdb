@@ -23,6 +23,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint
         pip install pytest pytest-cov
+        pip install pandas
+        pip install mysql-connector-python
 
     - name: Run pylint
       run: |

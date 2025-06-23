@@ -5,7 +5,9 @@
 <img alt="dbt" src="https://img.shields.io/badge/dbt-FD6D6D?style=for-the-badge&logo=dbt&logoColor=white" height="25px"/>
 <img alt="DuckDB" src="https://img.shields.io/badge/DuckDB-FFF500?style=for-the-badge&logo=duckduckgo&logoColor=black" height="25px"/>
 <img alt="Python" src="https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white" height="25px"/>
-> ✅ **CI/CD Integration**: This repository now includes static code analysis via [Pylint](https://pylint.pycqa.org/) and quality gate validation via [SonarCloud](https://sonarcloud.io/summary/new_code?id=manz01_dbt-core-sample-duckdb), which run automatically on push and pull request events. These checks ensure Python code quality, maintainability, and technical debt are continuously monitored.
+> **_NOTE:_**  ✅ **CI/CD Integration**: This repository now includes static code analysis via [Pylint](https://pylint.pycqa.org/) and quality gate validation via [SonarCloud](https://sonarcloud.io/summary/new_code?id=manz01_dbt-core-sample-duckdb)..
+
+<img src="markdown_images/GO_SALES_LOGO.png" alt="GO Sales Logo" width="200px" />
 
 # Go Sales DuckDB dbt Sample Project
 This repository contains a sample dbt project that demonstrates how to model and transform the GO Sales IBM sample data using dbt (data build tool) with DuckDB as the database engine. 

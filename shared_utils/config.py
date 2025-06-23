@@ -1,9 +1,7 @@
+"""Configuration utility to provide database connection settings."""
+
 import json
 import os
-
-"""
-Configuration utility to provide database connection settings.
-"""
 
 
 def get_db_config(database: str) -> dict:
@@ -25,7 +23,7 @@ def get_db_config(database: str) -> dict:
         "go-sales.json"
     )
 
-    with open(config_path, "r") as f:
+    with open(config_path, "r", encoding="utf-8") as f:
         config_map = json.load(f)
 
     if database not in config_map:

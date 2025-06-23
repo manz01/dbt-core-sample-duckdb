@@ -15,3 +15,5 @@ sonar.python.coverage.reportPaths=coverage.xml
 
 # Optional: pylint integration
 sonar.python.pylint.reportPath=pylint-report.txt
+sonar.inclusions=shared_utils/**/*.py
+sonar.test.inclusions=tests/**/*.py

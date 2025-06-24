@@ -30,17 +30,16 @@ clean-targets:         # directories to be removed by `dbt clean`
 # directory as views. These settings can be overridden in the individual model
 # files using the `{{ config(...) }}` macro.
 models:
-  go-sales:
-    01-raw:
-      +schema: raw
-      +materialized: table
-    02-stg:
-      +schema: stg
-      +materialized: view
-    03-det:
-      +schema: det
-      +materialized: incremental
-      +incremental_strategy: merge
-    04-mrt:
-      +schema: mrt
-      +materialized: table
+  01-raw:
+    +schema: raw
+    +materialized: table
+  02-stg:
+    +schema: stg
+    +materialized: view
+  03-det:
+    +schema: det
+    +materialized: incremental
+    +incremental_strategy: merge
+  04-mrt:
+    +schema: mrt
+    +materialized: table

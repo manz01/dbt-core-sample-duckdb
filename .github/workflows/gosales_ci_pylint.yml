@@ -1,4 +1,4 @@
-name: Pylint & SonarCloud
+name: GOSALES CI - Pylint
 
 on: [push]
 

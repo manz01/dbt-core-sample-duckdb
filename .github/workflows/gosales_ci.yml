@@ -1,3 +1,18 @@
+# -------------------------------------------------------------------------------
+# Program:        gosales_ci
+# Project:        dbt-core-sample-duckdb
+# Description:    CI workflow for Python linting, testing, SonarCloud analysis, 
+#                 and SQLFluff linting of dbt models
+# Author:         Manzar Ahmed
+# First Created:  Jun 2025
+# -------------------------------------------------------------------------------
+# Program history:
+# -------------------------------------------------------------------------------
+# Date        Programmer             Description
+# ----------  ---------------------  ---------------------------------------------
+# 2025-06-25  Manzar Ahmed           v0.01/Initial version
+# -------------------------------------------------------------------------------
+
 name: GOSALES CI - Pylint, SonarCloud, SQLFluff
 
 on:
@@ -57,7 +72,6 @@ jobs:
   sonarcloud:
     name: SonarCloud Analysis
     runs-on: ubuntu-latest
-    needs: python-lint-test
 
     steps:
     - name: Checkout repository
@@ -79,7 +93,6 @@ jobs:
   sqlfluff-lint:
     name: SQLFluff Lint
     runs-on: ubuntu-latest
-    needs: python-lint-test
 
     steps:
     - name: Checkout repository

@@ -1,4 +1,4 @@
-[![GOSALES CI - Pylint](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_pylint.yml/badge.svg)](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_pylint.yml)
+[![GOSALES CI - Flake8 & Pylint](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_pylint.yml/badge.svg)](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_pylint.yml)
 [![GOSALES CI - SonarCloud](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_sonarcloud.yml/badge.svg)](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_sonarcloud.yml)
 [![GOSALES CI - SQLFluff](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_sqlfluff.yml/badge.svg)](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_sqlfluff.yml)
 <br>

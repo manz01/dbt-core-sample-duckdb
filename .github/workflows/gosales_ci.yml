@@ -110,9 +110,14 @@ jobs:
     - name: Install dbt packages
       run: dbt deps || true
 
-    - name: Lint dbt models
+    - name: Lint dbt models with SQLFluff
+      working-directory: ${{ github.workspace }}
       run: |
-        sqlfluff lint models/ --format github-annotation --annotation-level failure --write-output annotations.json
+        sqlfluff lint models/ \
+          --dialect duckdb \
+          --format github-annotation \
+          --annotation-level failure \
+          --write-output annotations.json
 
     - name: Annotate PR with SQLFluff output
       if: always()

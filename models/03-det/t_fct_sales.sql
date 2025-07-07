@@ -26,60 +26,70 @@ Date        Programmer             Description
 {%- set high_date = '9999-12-31 00:00:00' %}
 
 with base as (
-    select      s.retailer_code,
-                s.product_number,
-                s.order_method_code,
-                s.transaction_date::date as transaction_date,
-                s.quantity,
-                s.unit_price,
-                s.unit_sale_price
-    from        {{ ref('t_stg_go_daily_sales') }} s
-    order by    s.transaction_date, 
-                s.retailer_code, 
-                s.product_number, 
-                s.order_method_code
+    select
+        s.retailer_code,
+        s.product_number,
+        s.order_method_code,
+        s.transaction_date::date as transaction_date,
+        s.quantity,
+        s.unit_price,
+        s.unit_sale_price
+    from {{ ref('t_stg_go_daily_sales') }} as s
+    order by
+        s.transaction_date,
+        s.retailer_code,
+        s.product_number,
+        s.order_method_code
 ),
 
 joined as (
-    select      nextval('seq_fct_sales_sk') as fct_sales_sk,
-                ---------------------------------------------
-                r.dim_retailer_sk,
-                p.dim_product_sk,
-                m.dim_order_method_sk,
-                ---------------------------------------------
-                b.transaction_date,
-                b.quantity,
-                b.unit_price,
-                b.unit_sale_price,
-                ---------------------------------------------
-                getvariable('current_ts') as create_ts,
-                getvariable('current_ts') as update_ts
-
-    from        base b
-    left join   {{ ref('t_dim_retailers') }} r
-    on          b.retailer_code = r.retailer_code
-    and         r.end_ts = ('{{ high_date }}')::timestamp
-
-    left join   {{ ref('t_dim_products') }} p
-    on          b.product_number = p.product_number
-    and         p.end_ts = ('{{ high_date }}')::timestamp
-
-    left join   {{ ref('t_dim_order_method') }} m
-    on          b.order_method_code = m.order_method_code
+    select
+        nextval('seq_fct_sales_sk') as fct_sales_sk,
+        r.dim_retailer_sk,
+        p.dim_product_sk,
+        m.dim_order_method_sk,
+        b.transaction_date,
+        b.quantity,
+        b.unit_price,
+        b.unit_sale_price,
+        getvariable('current_ts') as create_ts,
+        getvariable('current_ts') as update_ts
+    from base as b
+        left join {{ ref('t_dim_retailers') }} as r
+            on b.retailer_code = r.retailer_code
+            and r.end_ts = ('{{ high_date }}')::timestamp
+        left join {{ ref('t_dim_products') }} as p
+            on b.product_number = p.product_number
+            and p.end_ts = ('{{ high_date }}')::timestamp
+        left join {{ ref('t_dim_order_methods') }} as m
+            on b.order_method_code = m.order_method_code
 )
 
-select * from joined
+select
+    fct_sales_sk,
+    dim_retailer_sk,
+    dim_product_sk,
+    dim_order_method_sk,
+    transaction_date,
+    quantity,
+    unit_price,
+    unit_sale_price,
+    create_ts,
+    update_ts
+from joined
 
 {% if is_incremental() %}
-    where ( dim_retailer_sk, 
-            dim_product_sk, 
-            dim_order_method_sk, 
-            transaction_date) 
-    not in (
-        select  dim_retailer_sk, 
-                dim_product_sk, 
-                dim_order_method_sk, 
-                transaction_date
-        from    {{ this }}
-    )
+where (
+    dim_retailer_sk,
+    dim_product_sk,
+    dim_order_method_sk,
+    transaction_date
+) not in (
+    select
+        dim_retailer_sk,
+        dim_product_sk,
+        dim_order_method_sk,
+        transaction_date
+    from {{ this }}
+)
 {% endif %}

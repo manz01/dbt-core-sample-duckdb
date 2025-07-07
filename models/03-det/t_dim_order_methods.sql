@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
-Program:        t_dim_order_method
+Program:        t_dim_order_methods
 Project:        duckdb-core-sample-go-sales
 Description:    SCD1 dimension model for GO Sales order methods with surrogate
                 key and audit columns
 Input(s):       stg.t_stg_go_methods
-Output(s):      det.t_dim_order_method
+Output(s):      det.t_dim_order_methods
 Author:         Manzar Ahmed
 First Created:  Jun 2025
 --------------------------------------------------------------------------------

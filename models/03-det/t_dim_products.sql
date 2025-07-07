@@ -17,7 +17,9 @@ Date        Programmer             Description
                                    timestamps
 2025-06-23  Manzar Ahmed           v0.03/SonarQube issues fixed:  
                                    Define a constant instead of duplicating this 
-                                   literal 5 times (plsql:S1192)                                
+                                   literal 5 times (plsql:S1192)    
+2025-07-07  Manzar Ahmed           v0.04/Added version number, current_version 
+                                   and prior surrogate key to SCD2                                                            
 -------------------------------------------------------------------------------*/
 {{ config(
     materialized = 'incremental',
@@ -25,7 +27,6 @@ Date        Programmer             Description
     unique_key = 'product_number',
     pre_hook = ["create sequence if not exists seq_dim_product_sk start 1 increment 1"]
 ) }}
-
 
 {% set vars = get_scd2_vars() %}
 {% set start_ts = "('" ~ vars.start_ts ~ "')::timestamp" %}
@@ -67,7 +68,9 @@ existing_records as (
             unit_price,
             scd2_hash,
             start_ts,
-            end_ts
+            end_ts,
+            version_number,
+            prior_dim_product_sk
     from    {{ this }}
     where   end_ts = {{ high_date_ts }}
 ),
@@ -81,7 +84,9 @@ ordered_changes as (
                 c.product_color,
                 c.unit_cost,
                 c.unit_price,
-                c.scd2_hash
+                c.scd2_hash,
+                e.dim_product_sk as prior_dim_product_sk,
+                coalesce(e.version_number, 0) + 1 as version_number
     from        current_data c
     left join   existing_records e
     on          c.product_number = e.product_number
@@ -102,7 +107,10 @@ changes as (
                 oc.unit_price,
                 oc.scd2_hash,
                 {{ start_ts }} as start_ts,
-                {{ high_date_ts }} as end_ts
+                {{ high_date_ts }} as end_ts,
+                oc.version_number,
+                true as current_version,
+                oc.prior_dim_product_sk
     from        ordered_changes oc
 ),
 
@@ -118,7 +126,10 @@ updates as (
                 e.unit_price,
                 e.scd2_hash,
                 e.start_ts,
-                {{ end_ts }} as end_ts
+                {{ end_ts }} as end_ts,
+                e.version_number,
+                false as current_version,
+                e.prior_dim_product_sk
     from        existing_records e
     join        changes c
     on          e.product_number = c.product_number
@@ -126,7 +137,7 @@ updates as (
 ),
 
 unchanged_history as (
-    select *
+    select *, false as current_version
     from {{ this }}
     where end_ts != {{ high_date_ts }}
 )
@@ -150,7 +161,10 @@ select  nextval('seq_dim_product_sk') as dim_product_sk,
         unit_price,
         scd2_hash,
         {{ start_ts }} as start_ts,
-        {{ high_date_ts }} as end_ts
+        {{ high_date_ts }} as end_ts,
+        1 as version_number,
+        true as current_version,
+        null as prior_dim_product_sk
 from    current_data
 order by product_number
 

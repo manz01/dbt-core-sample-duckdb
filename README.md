@@ -1,6 +1,6 @@
 [![GOSALES CI - Flake8 & Pylint](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_pylint.yml/badge.svg)](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_pylint.yml)
 [![GOSALES CI - SonarCloud](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_sonarcloud.yml/badge.svg)](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_sonarcloud.yml)
-[![GOSALES CI - SQLFluff](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_sqlfluff.yml/badge.svg)](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_sqlfluff.yml)
+
 <br>
 <img alt="SQL" src="https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=sqlite&logoColor=white" height="25px"/>
 <img alt="dbt" src="https://img.shields.io/badge/dbt-FD6D6D?style=for-the-badge&logo=dbt&logoColor=white" height="25px"/>
@@ -92,7 +92,23 @@ The dbt-core project follows a **layered design architecture** that systematical
 3. **Detailed Layer (`det`)**  
    - This is the business logic layer, where transformations are applied to derive meaningful metrics and dimensions.
    - It includes joins, surrogate key generation, Slowly Changing Dimensions (SCD), and other enrichment logic.
+   - The detailed layer will build a star schema for the go sales data
 
+```text
+ +------------------+  +--------------+
+ |t_dim_order_method|  |t_dim_products|
+ +------------------+  +--------------+                 
+         \              /
+          \            /
+           +-----------+
+           |t_fct_sales|
+           +-----------+
+           /          \
+          /            \
+   +-----------+    +---------------+
+   |t_dim_dates|    |t_dim_retailers|
+   +-----------+    +---------------+
+```
 4. **Mart Layer (`mrt`)**  
    - This final layer presents the data in a business-consumable format.
    - It aggregates and filters data for reporting, dashboards, and analytics use cases.
@@ -105,8 +121,8 @@ Each layer feeds into the next, ensuring that transformations are traceable and 
 **Create Aliases & Global Vars**
 
 ```sh
-export DBT_PROJ_DIR='/home/u001/dbt-core-sample-duckdb'
-export DBT_PROFILE_DIR='/home/u001/dbt-core-sample-duckdb'
+export DBT_PROJ_DIR='/home/u0001/dbt-core-sample-duckdb'
+export DBT_PROFILE_DIR='/home/u0001/dbt-core-sample-duckdb'
 export PYTHONPATH=$DBT_PROJ_DIR
 ```
 

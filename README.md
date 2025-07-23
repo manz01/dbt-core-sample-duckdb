@@ -31,11 +31,12 @@ This repository contains a sample dbt project that demonstrates how to model and
   - [3.4. Mart Models (MRT)](#34-mart-models-mrt)
 - [4. Visualise Lineage with dbt Docs](#4-visualise-lineage-with-dbt-docs)
 - [5. Low-Level Design (LLD)](#5-low-level-design-lld)
-  - [5.1. Models - raw layer](#511-models---raw-layer)
-  - [5.2. Models - stg layer](#512-models---stg-layer)
-  - [5.3. Models - det layer](#513-models---det-layer)
-  - [5.4. Models - mrt layer](#514-models---mrt-layer)
-  - [5.5. Macros](#515-macros)
+  - [5.1.1. Models - raw layer](#511-models---raw-layer)
+  - [5.1.2. Models - stg layer](#512-models---stg-layer)
+  - [5.1.3. Models - det layer](#513-models---det-layer)
+  - [5.1.4. Models - mrt layer](#514-models---mrt-layer)
+  - [5.2. Macros](#52-macros)
+  - [5.3. Python Utils](#53-python-utils)
 
 >NOTE: This sample project utlizes the [GO Sales IBM sample data](https://dataplatform.cloud.ibm.com/exchange/public/entry/view/dcf7b09bd340e6ff9a2d1869631f3753) to demonstrate dbt modeling techniques. It is designed to be run with DuckDB as the database engine, but can be adapted for other engines like Snowflake, BigQuery, or Redshift with minor modifications to the dbt profiles and SQL syntax. The GO Sales dataset is a fictional retail dataset that simulates sales operations for a global retailer, and available under the MIT License. 
 
@@ -177,16 +178,16 @@ The following diagram provides a visual representation of the dbt model lineage 
 ## 5.1.1. Models - raw layer
 | #  | Object Name                | Object Type | Description                        |
 |----|----------------------------|-------------|------------------------------------|
-| 1  | [t_raw_go_1k.py](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/go-sales/01-raw/t_raw_go_1k.py)             | Python File | Python script for GO 1k data       |
-| 2  | [t_raw_go_1k.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/go-sales/01-raw/t_raw_go_1k.yml)            | YAML File   | Metadata/config for GO 1k          |
-| 3  | [t_raw_go_daily_sales.py](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/go-sales/01-raw/t_raw_go_daily_sales.py)    | Python File | Python script for daily sales data |
-| 4  | [t_raw_go_daily_sales.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/go-sales/01-raw/t_raw_go_daily_sales.yml)   | YAML File   | Metadata/config for daily sales    |
-| 5  | [t_raw_go_methods.py](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/go-sales/01-raw/t_raw_go_methods.py)        | Python File | Python script for GO methods       |
-| 6  | [t_raw_go_methods.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/go-sales/01-raw/t_raw_go_methods.yml)       | YAML File   | Metadata/config for GO methods     |
-| 7  | [t_raw_go_products.py](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/go-sales/01-raw/t_raw_go_products.py)      | Python File | Python script for GO products      |
-| 8  | [t_raw_go_products.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/go-sales/01-raw/t_raw_go_products.yml)     | YAML File   | Metadata/config for GO products    |
-| 9  | [t_raw_go_retailers.py](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/go-sales/01-raw/t_raw_go_retailers.py)     | Python File | Python script for GO retailers     |
-| 10 | [t_raw_go_retailers.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/go-sales/01-raw/t_raw_go_retailers.yml)    | YAML File   | Metadata/config for GO retailers   |
+| 1  | [t_raw_go_1k.py](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/01-raw/t_raw_go_1k.py)             | Python File | Python script for GO 1k data       |
+| 2  | [t_raw_go_1k.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/01-raw/t_raw_go_1k.yml)            | YAML File   | Metadata/config for GO 1k          |
+| 3  | [t_raw_go_daily_sales.py](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/01-raw/t_raw_go_daily_sales.py)    | Python File | Python script for daily sales data |
+| 4  | [t_raw_go_daily_sales.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/01-raw/t_raw_go_daily_sales.yml)   | YAML File   | Metadata/config for daily sales    |
+| 5  | [t_raw_go_methods.py](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/01-raw/t_raw_go_methods.py)        | Python File | Python script for GO methods       |
+| 6  | [t_raw_go_methods.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/01-raw/t_raw_go_methods.yml)       | YAML File   | Metadata/config for GO methods     |
+| 7  | [t_raw_go_products.py](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/01-raw/t_raw_go_products.py)      | Python File | Python script for GO products      |
+| 8  | [t_raw_go_products.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/01-raw/t_raw_go_products.yml)     | YAML File   | Metadata/config for GO products    |
+| 9  | [t_raw_go_retailers.py](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/01-raw/t_raw_go_retailers.py)     | Python File | Python script for GO retailers     |
+| 10 | [t_raw_go_retailers.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/01-raw/t_raw_go_retailers.yml)    | YAML File   | Metadata/config for GO retailers   |
 
 ## 5.1.2. Models - stg layer
 
@@ -237,3 +238,11 @@ The following diagram provides a visual representation of the dbt model lineage 
 |----|------------------------------------------|--------------------------------------------------|
 | 1  | [custom_schema.sql](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/macros/custom_schema.sql) | Macro to dynamically assign custom schemas based on environment or config |
 | 2  | [scd2_ts.sql](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/macros/scd2_ts.sql)           | Macro to implement SCD Type 2 logic with timestamp-based tracking         |
+
+## 5.3. Python Utils
+
+| #  | File Name                                                | Description                                      |
+|----|-----------------------------------------------------------|--------------------------------------------------|
+| 1  | [`__init__.py`](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/shared_utils/__init__.py)      | Marks the directory as a Python package          |
+| 2  | [`config.py`](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/shared_utils/config.py)          | Contains shared configuration values and helpers |
+| 3  | [`db_utils.py`](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/shared_utils/db_utils.py)      | Utility functions for database access and queries |

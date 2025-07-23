@@ -25,9 +25,9 @@ with fact as (
     from {{ ref('t_fct_sales') }}
 ),
 
-order_method as (
+order_methods as (
     select *
-    from {{ ref('t_dim_order_method') }}
+    from {{ ref('t_dim_order_methods') }}
 ),
 
 product as (
@@ -65,15 +65,15 @@ select
     -- Retailer dimension
     r.retailer_code,
     r.retailer_name,
-    r.country  as retailer_country,
+    r.country as retailer_country,
     r.type as retailer_type
 
-from fact f
-left join order_method om
+from fact as f
+left join order_methods as om
     on f.dim_order_method_sk = om.dim_order_method_sk
 
-left join product p
+left join product as p
     on f.dim_product_sk = p.dim_product_sk
 
-left join retailer r
+left join retailer as r
     on f.dim_retailer_sk = r.dim_retailer_sk

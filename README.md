@@ -33,7 +33,7 @@ This repository contains a sample dbt project that demonstrates how to model and
 3.4. [Mart Models (MRT)](#34)<br>
 4. [Visualise Lineage with dbt Docs](#4)<br>
 5. [Low-Level Design (LLD)](#5)<br>
-5.1.1. [Models - raw layer](#511)
+5.1.1. [Models - raw layer](#511)<br>
 5.1.2. [Models - stg layer](#512)<br>
 5.1.3. [Models - det layer](#513)<br>
 5.1.4. [Models - mrt layer](#514)<br>

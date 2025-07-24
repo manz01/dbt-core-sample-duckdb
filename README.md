@@ -22,30 +22,34 @@ This repository contains a sample dbt project that demonstrates how to model and
 |1.4|2025-07-23|Manzar Ahmed|Added section Low level design|
 
 ## Table of Content
-- [1. Background](#1-background)
-- [2. High Level Design](#2-high-level-design)
-- [3. Run dbt Models](#3-run-dbt-models)
-  - [3.1. Raw Models](#31-raw-models)
-  - [3.2. Staging Models](#32-staging-models)
-  - [3.3. Detailed Models (DET)](#33-detailed-models-det)
-  - [3.4. Mart Models (MRT)](#34-mart-models-mrt)
-- [4. Visualise Lineage with dbt Docs](#4-visualise-lineage-with-dbt-docs)
-- [5. Low-Level Design (LLD)](#5-low-level-design-lld)
-  - [5.1.1. Models - raw layer](#511-models---raw-layer)
-  - [5.1.2. Models - stg layer](#512-models---stg-layer)
-  - [5.1.3. Models - det layer](#513-models---det-layer)
-  - [5.1.4. Models - mrt layer](#514-models---mrt-layer)
-  - [5.2. Macros](#52-macros)
-  - [5.3. Python Utils](#53-python-utils)
+<div class="alert alert-block alert-info" style="margin-top: 20px">
+
+1. [Background](#1)<br>
+2. [High Level Design](#2)<br>
+3. [Run dbt Models](#3)<br>
+3.1. [Raw Models](#31)<br>
+3.2. [Staging Models](#32)<br>
+3.3. [Detailed Models (DET)](#33)<br>
+3.4. [Mart Models (MRT)](#34)<br>
+4. [Visualise Lineage with dbt Docs](#4)<br>
+5. [Low-Level Design (LLD)](#5)<br>
+5.1.1. [Models - raw layer](#511)
+5.1.2. [Models - stg layer](#512)<br>
+5.1.3. [Models - det layer](#513)<br>
+5.1.4. [Models - mrt layer](#514)<br>
+5.1.5.  [Macros](#515)<br>
+5.1.6. [Python Utils](#516)<br>
+</div>
+<hr>
 
 >NOTE: This sample project utlizes the [GO Sales IBM sample data](https://dataplatform.cloud.ibm.com/exchange/public/entry/view/dcf7b09bd340e6ff9a2d1869631f3753) to demonstrate dbt modeling techniques. It is designed to be run with DuckDB as the database engine, but can be adapted for other engines like Snowflake, BigQuery, or Redshift with minor modifications to the dbt profiles and SQL syntax. The GO Sales dataset is a fictional retail dataset that simulates sales operations for a global retailer, and available under the MIT License. 
 
-## 1. Background
+## 1. Background <a id="1"></a>
 The GO Sales IBM sample data is a fictional retail dataset designed to demonstrate business analytics, reporting, and data warehousing techniques. It simulates sales operations for a global retailer and contains various interconnected tables that model business domains. A copy of the entity relationship diagram is provided below for reference.
 
 <img src="markdown_images/go-sales-erd.png" alt="GO Sales Entity Relationship Diagram" width="1000px" />
 
-## 2. High Level Design
+## 2. High Level Design <a id="2"></a>
 
 The dbt-core project follows a **layered design architecture** that systematically structures data transformations through a series of increasingly refined stages. This layered approach promotes modularity, reusability, and transparency in the data pipeline.
 
@@ -88,7 +92,7 @@ The dbt-core project follows a **layered design architecture** that systematical
 Each layer feeds into the next, ensuring that transformations are traceable and logically separated. 
 
 
-## 3. Run dbt Models
+## 3. Run dbt Models <a id="3"></a>
 This section outlines how to set up your environment and run different layers of the GO Sales dbt models using convenient shell commands.
 
 **Create Aliases & Global Vars**
@@ -108,13 +112,13 @@ Define a shell alias to simplify running the dbt project with the correct profil
 ```sh
 alias dbt_run_go_sales='dbt run --project-dir $DBT_PROJ_DIR --profiles-dir $DBT_PROFILE_DIR --target go_sales'
 ```
-### 3.1. Raw Models
+### 3.1. Raw Models <a id="31"></a>
 Run all models tagged with `GO_SALES_RAW`. These models typically ingest and prepare raw data, often performing minimal transformations.
 ```sh
 dbt_run_go_sales --select tag:GO_SALES_RAW
 ```
 
-### 3.2. Staging Models
+### 3.2. Staging Models <a id="32"></a>
 
 Run staging layer models tagged with `GO_SALES_STG`. These models clean and standardize raw data into a more analysis-ready format.
 
@@ -122,7 +126,7 @@ Run staging layer models tagged with `GO_SALES_STG`. These models clean and stan
 dbt_run_go_sales --select tag:GO_SALES_STG
 ```
 
-### 3.3. Detailed Models (DET)
+### 3.3. Detailed Models (DET) <a id="33"></a>
 
 Run detailed transformation models tagged with `GO_SALES_DET`. These models perform more complex business logic and enrichment tasks.
 
@@ -130,7 +134,7 @@ Run detailed transformation models tagged with `GO_SALES_DET`. These models perf
 dbt_run_go_sales --select tag:GO_SALES_DET
 ```
 
-### 3.4. Mart Models (MRT)
+### 3.4. Mart Models (MRT) <a id="34"></a>
 
 Run mart layer models tagged with `GO_SALES_MRT`. These are the final outputs optimized for reporting and analytics.
 
@@ -138,7 +142,7 @@ Run mart layer models tagged with `GO_SALES_MRT`. These are the final outputs op
 dbt_run_go_sales --select tag:GO_SALES_MRT
 ```
 
-## 4. Visualise Lineage with dbt Docs
+## 4. Visualise Lineage with dbt Docs <a id="4"></a>
 
 dbt provides an interactive lineage graph that visually represents how models are built from raw data through staging, transformation, and into marts. This helps developers, analysts, and stakeholders understand data dependencies and relationships.
 
@@ -173,9 +177,9 @@ The following diagram provides a visual representation of the dbt model lineage 
 
 ![](markdown_images/gosales-dbt-dag.png)
 
-# 5. Low-Level Design (LLD) 
+# 5. Low-Level Design (LLD) <a id="5"></a>
 
-## 5.1.1. Models - raw layer
+## 5.1.1. Models - raw layer <a id="511"></a>
 | #  | Object Name                | Object Type | Description                        |
 |----|----------------------------|-------------|------------------------------------|
 | 1  | [t_raw_go_1k.py](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/01-raw/t_raw_go_1k.py)             | Python File | Python script for GO 1k data       |
@@ -189,7 +193,7 @@ The following diagram provides a visual representation of the dbt model lineage 
 | 9  | [t_raw_go_retailers.py](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/01-raw/t_raw_go_retailers.py)     | Python File | Python script for GO retailers     |
 | 10 | [t_raw_go_retailers.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/01-raw/t_raw_go_retailers.yml)    | YAML File   | Metadata/config for GO retailers   |
 
-## 5.1.2. Models - stg layer
+## 5.1.2. Models - stg layer <a id="512"></a>
 
 | #  | Object Name                                 | Object Type | Description                             |
 |----|---------------------------------------------|-------------|-----------------------------------------|
@@ -206,7 +210,7 @@ The following diagram provides a visual representation of the dbt model lineage 
 
 ---
 
-## 5.1.3. Models - det layer
+## 5.1.3. Models - det layer <a id="513"></a>
 
 | #  | Object Name                                 | Object Type | Description                             |
 |----|---------------------------------------------|-------------|-----------------------------------------|
@@ -223,7 +227,7 @@ The following diagram provides a visual representation of the dbt model lineage 
 
 ---
 
-## 5.1.4. Models - mrt layer
+## 5.1.4. Models - mrt layer <a id="514"></a>
 
 | #  | Object Name                          | Object Type | Description                        |
 |----|--------------------------------------|-------------|------------------------------------|
@@ -232,14 +236,14 @@ The following diagram provides a visual representation of the dbt model lineage 
 
 ---
 
-## 5.2. Macros
+## 5.1.5. Macros <a id="515"></a>
 
 | #  | Macro File                              | Description                                      |
 |----|------------------------------------------|--------------------------------------------------|
 | 1  | [custom_schema.sql](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/macros/custom_schema.sql) | Macro to dynamically assign custom schemas based on environment or config |
 | 2  | [scd2_ts.sql](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/macros/scd2_ts.sql)           | Macro to implement SCD Type 2 logic with timestamp-based tracking         |
 
-## 5.3. Python Utils
+## 5.1.6. Python Utils <a id="516"></a>
 
 | #  | File Name                                                | Description                                      |
 |----|-----------------------------------------------------------|--------------------------------------------------|

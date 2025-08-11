@@ -238,15 +238,15 @@ The following diagram provides a visual representation of the dbt model lineage 
 
 ## 5.1.5. Macros <a id="515"></a>
 
-| #  | Macro File                              | Description                                      |
-|----|------------------------------------------|--------------------------------------------------|
-| 1  | [custom_schema.sql](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/macros/custom_schema.sql) | Macro to dynamically assign custom schemas based on environment or config |
-| 2  | [scd2_ts.sql](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/macros/scd2_ts.sql)           | Macro to implement SCD Type 2 logic with timestamp-based tracking         |
+| #  | Object Name                          | Object Type | Description                        |
+|----|--------------------------------------|-------------|------------------------------------|
+| 1  | [custom_schema.sql](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/macros/custom_schema.sql) | SQL (Jinja) File |  Macro to dynamically assign custom schemas based on environment or config |
+| 2  | [scd2_ts.sql](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/macros/scd2_ts.sql)           | SQL (Jinja) File  | Macro to implement SCD Type 2 logic with timestamp-based tracking         |
 
 ## 5.1.6. Python Utils <a id="516"></a>
 
-| #  | File Name                                                | Description                                      |
-|----|-----------------------------------------------------------|--------------------------------------------------|
-| 1  | [`__init__.py`](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/shared_utils/__init__.py)      | Marks the directory as a Python package          |
-| 2  | [`config.py`](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/shared_utils/config.py)          | Contains shared configuration values and helpers |
-| 3  | [`db_utils.py`](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/shared_utils/db_utils.py)      | Utility functions for database access and queries |
+| #  | Object Name                          | Object Type | Description                        |
+|----|--------------------------------------|-------------|------------------------------------|
+| 1  | [`__init__.py`](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/shared_utils/__init__.py)      | Python File|  Marks the directory as a Python package          |
+| 2  | [`config.py`](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/shared_utils/config.py)          |Python File| Contains shared configuration values and helpers |
+| 3  | [`db_utils.py`](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/shared_utils/db_utils.py)      |Python File| Utility functions for database access and queries |

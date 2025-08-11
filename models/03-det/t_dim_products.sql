@@ -19,12 +19,13 @@ Date        Programmer             Description
                                    Define a constant instead of duplicating this 
                                    literal 5 times (plsql:S1192)    
 2025-07-07  Manzar Ahmed           v0.04/Added version number, current_version 
-                                   and prior surrogate key to SCD2                                                            
+                                   and prior surrogate key to SCD2        
+2025-08-07  Manzar Ahmed           v0.05/scd2 enhancements, added                                                                                    
 -------------------------------------------------------------------------------*/
 {{ config(
     materialized = 'incremental',
     schema = 'det',
-    unique_key = 'product_number',
+    unique_key = ['dim_product_sk'],
     pre_hook = ["create sequence if not exists seq_dim_product_sk start 1 increment 1"]
 ) }}
 
@@ -34,45 +35,26 @@ Date        Programmer             Description
 {% set high_date_ts = "('" ~ vars.high_date ~ "')::timestamp" %}
 
 with current_data as (
-    select  product_number,
-            product_line,
-            product_type,
-            product,
-            product_brand,
-            product_color,
-            unit_cost,
-            unit_price,
-            md5(
-                coalesce(product_line, '') || '|' ||
-                coalesce(product_type, '') || '|' ||
-                coalesce(product, '') || '|' ||
-                coalesce(product_brand, '') || '|' ||
-                coalesce(product_color, '') || '|' ||
-                coalesce(cast(unit_cost as varchar), '') || '|' ||
-                coalesce(cast(unit_price as varchar), '')
-            ) as scd2_hash
-    from    {{ ref('t_stg_go_products') }}
+    select *,
+            {{ scd2_hash([
+            'product_number',        
+            'product_line',
+            'product_type',
+            'product',
+            'product_brand',
+            'product_color',
+            'cast(unit_cost as decimal(18,2))',
+            'cast(unit_price as decimal(18,2))'
+        ]) }} as scd2_hash
+    from {{ ref('t_stg_go_products') }}
 )
 
 {% if is_incremental() %},
 
 existing_records as (
-    select  dim_product_sk,
-            product_number,
-            product_line,
-            product_type,
-            product,
-            product_brand,
-            product_color,
-            unit_cost,
-            unit_price,
-            scd2_hash,
-            start_ts,
-            end_ts,
-            version_number,
-            prior_dim_product_sk
-    from    {{ this }}
-    where   end_ts = {{ high_date_ts }}
+    select *
+    from {{ this }}
+    where current_version = true
 ),
 
 ordered_changes as (
@@ -133,20 +115,12 @@ updates as (
     from        existing_records e
     join        changes c
     on          e.product_number = c.product_number
-    where       e.end_ts = {{ high_date_ts }}
-),
-
-unchanged_history as (
-    select *, false as current_version
-    from {{ this }}
-    where end_ts != {{ high_date_ts }}
+    where       e.current_version = true
 )
 
 select * from changes
 union all
 select * from updates
-union all
-select * from unchanged_history
 
 {% else %}
 
@@ -164,7 +138,7 @@ select  nextval('seq_dim_product_sk') as dim_product_sk,
         {{ high_date_ts }} as end_ts,
         1 as version_number,
         true as current_version,
-        null as prior_dim_product_sk
+        -1 as prior_dim_product_sk
 from    current_data
 order by product_number
 

@@ -13,7 +13,6 @@ Program history:
 Date        Programmer             Description
 ----------  ---------------------  ---------------------------------------------
 2025-06-11  Manzar Ahmed           v0.01/Initial version
-2025-08-07  Manzar Ahmed           v0.02/create scd2 hash in staging layer
 -------------------------------------------------------------------------------*/
 
 with stg_products as (

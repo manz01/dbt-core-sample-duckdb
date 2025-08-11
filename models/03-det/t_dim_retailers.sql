@@ -16,13 +16,14 @@ Date        Programmer             Description
                                    timestamps
 2025-06-23  Manzar Ahmed           v0.03/SonarQube issues fixed:  
                                    Define a constant instead of duplicating this 
-                                   literal 5 times (plsql:S1192)                                   
+                                   literal 5 times (plsql:S1192)  
+2025-08-07  Manzar Ahmed           v0.04/scd2 enhancements, added                                                                            
 -------------------------------------------------------------------------------*/
 
 {{ config(
     materialized = 'incremental',
     schema = 'det',
-    unique_key = 'retailer_code',
+    unique_key = ['dim_retailer_sk'],
     pre_hook = ["create sequence if not exists seq_dim_retailer_sk start 1 increment 1"]
 ) }}
 
@@ -36,11 +37,12 @@ with current_data as (
             retailer_name,
             type,
             country,
-            md5(
-                coalesce(retailer_name, '') || '|' ||
-                coalesce(type, '') || '|' ||
-                coalesce(country, '')
-                ) as scd2_hash
+            {{ scd2_hash([
+                'retailer_code',
+                'retailer_name',        
+                'type',
+                'country'
+            ]) }} as scd2_hash
     from    {{ ref('t_stg_go_retailers') }}
 )
 
@@ -97,19 +99,11 @@ updates as (
     join    changes c
     on      e.retailer_code = c.retailer_code
     where   e.end_ts = {{ high_date_ts }}
-),
-
-unchanged_history as (
-    select *
-    from {{ this }}
-    where end_ts != {{ high_date_ts }}
 )
 
 select * from changes
 union all
 select * from updates
-union all
-select * from unchanged_history
 
 {% else %}
 

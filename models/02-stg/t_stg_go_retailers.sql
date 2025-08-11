@@ -15,8 +15,9 @@ Date        Programmer             Description
 2025-06-11  Manzar Ahmed           v0.01/Initial version
 -------------------------------------------------------------------------------*/
 
-select  "Retailer code" as retailer_code, 
-        "Retailer name" as retailer_name, 
-        "Type" as type, 
-        "Country" as country
-from    {{ ref('t_raw_go_retailers') }}
+select
+    "Retailer code" as retailer_code,
+    "Retailer name" as retailer_name,
+    type,
+    country
+from {{ ref('t_raw_go_retailers') }}

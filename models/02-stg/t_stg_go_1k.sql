@@ -1,4 +1,4 @@
-/*-------------------------------------------------------------------------------
+/*------------------------------------------------------------------------------
 Program:        t_stg_go_1k
 Project:        duckdb-core-sample-go-sales
 Description:    Staging model for GO Sales products transactions
@@ -13,11 +13,12 @@ Program history:
 Date        Programmer             Description
 ----------  ---------------------  ---------------------------------------------
 2025-06-11  Manzar Ahmed           v0.01/Initial version
--------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 
-select    "Retailer code" as retailer_code,
-          "Product number" as product_number,
-          "Date"::date as transaction_date,
-          "Quantity" as quantity
+select
+    "Retailer code" as retailer_code,
+    "Product number" as product_number,
+    date::date as transaction_date,
+    quantity
 
-from      {{ ref('t_raw_go_1k') }}
+from {{ ref('t_raw_go_1k') }}

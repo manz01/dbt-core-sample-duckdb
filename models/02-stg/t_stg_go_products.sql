@@ -13,14 +13,40 @@ Program history:
 Date        Programmer             Description
 ----------  ---------------------  ---------------------------------------------
 2025-06-11  Manzar Ahmed           v0.01/Initial version
+2025-08-07  Manzar Ahmed           v0.02/create scd2 hash in staging layer
 -------------------------------------------------------------------------------*/
 
-select  "Product number" as product_number, 
-        "Product line" as product_line, 
-        "Product type" as product_type,  
-        "Product" as product, 
-        "Product brand" as product_brand, 
-        "Product color" as product_color, 
-        "Unit cost" as unit_cost, 
+with stg_products as (
+    select
+        "Product number" as product_number,
+        "Product line" as product_line,
+        "Product type" as product_type,
+        "product" as product,
+        "Product brand" as product_brand,
+        "Product color" as product_color,
+        "Unit cost" as unit_cost,
         "Unit price" as unit_price
-from     {{ ref('t_raw_go_products') }}
+    from {{ ref('t_raw_go_products') }}
+    qualify row_number() over (
+        partition by 
+            product_number,
+            product_line,
+            product_type,
+            product,
+            product_brand,
+            product_color,
+        order by
+            product_number desc
+        ) = 1    
+)
+select
+    product_number,
+    product_line,
+    product_type,
+    product,
+    product_brand,
+    product_color,
+    unit_cost,
+    unit_price
+
+from stg_products

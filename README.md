@@ -9,7 +9,7 @@
 
 <img src="markdown_images/GO_SALES_LOGO.png" alt="GO Sales Logo" width="500px" />
 
-# Go Sales DuckDB dbt Sample Project
+# Go Sales 🦆 DuckDB dbt Sample Project
 This repository contains a sample dbt project that demonstrates how to model and transform the GO Sales IBM sample data using dbt (data build tool) with DuckDB as the database engine. 
 
 ### Document Control

@@ -1,25 +1,34 @@
-/*------------------------------------------------------------------------------
-Program:        t_det_go_retailers
-Project:        duckdb-core-sample-go-sales
-Description:    SCD2 dimension model for GO Sales retailers
-Input(s):       stg.t_stg_go_retailers
-Output(s):      det.t_det_go_retailers
-Author:         Manzar Ahmed
-First Created:  Jun 2025
---------------------------------------------------------------------------------
-Program history:
---------------------------------------------------------------------------------
-Date        Programmer             Description
-----------  ---------------------  ---------------------------------------------
-2025-06-11  Manzar Ahmed           v0.01/Initial version
-2025-06-23  Manzar Ahmed           v0.02/Utilising SCD2 vars for start and end 
-                                   timestamps
-2025-06-23  Manzar Ahmed           v0.03/SonarQube issues fixed:  
-                                   Define a constant instead of duplicating this 
-                                   literal 5 times (plsql:S1192)  
-2025-08-07  Manzar Ahmed           v0.04/scd2 enhancements, added                                                                            
--------------------------------------------------------------------------------*/
-
+/*
+  ******************************************************************************
+  *               _____          _____       _                                 *
+  *              / ____|        / ____|     | |                                *
+  *             | |  __  ___   | (___   __ _| | ___  ___                       *
+  *             | | |_ |/ _ \   \___ \ / _` | |/ _ \/ __|                      *
+  *             | |__| | (_) |  ____) | (_| | |  __/\__ \                      *
+  *              \_____|\___/  |_____/ \__,_|_|\___||___/                      *
+  *                                                                            *
+  ******************************************************************************
+  * Path:           models/03-det
+  * Program:        t_det_go_retailers.sql
+  * Project:        dbt_core_sample_duckdb
+  * Description:    SCD2 dimension model for GO Sales retailers with surrogate 
+  *                 key and change hash
+  * Author:         Manzar Ahmed
+  * First Created:  Jun 2025
+  ******************************************************************************
+  * Program history:
+  ******************************************************************************
+  * Date        Programmer             Description
+  * ----------  ---------------------- -----------------------------------------
+  * 2025-06-11  Manzar Ahmed           v0.01/Initial version
+  * 2025-06-23  Manzar Ahmed           v0.02/Utilising SCD2 vars for start and 
+  *                                    end timestamps
+  * 2025-06-23  Manzar Ahmed           v0.03/SonarQube issues fixed:
+  *                                    Define a constant instead of duplicating 
+  *                                    this literal 5 times (plsql:S1192)
+  * 2025-08-07  Manzar Ahmed           v0.04/scd2 enhancements, added
+  ******************************************************************************
+*/
 {{ config(
     materialized = 'incremental',
     schema = 'det',
@@ -33,17 +42,18 @@ Date        Programmer             Description
 {% set high_date_ts = "('" ~ vars.high_date ~ "')::timestamp" %}
 
 with current_data as (
-    select  retailer_code,
-            retailer_name,
-            type,
-            country,
+    select
+        retailer_code,
+        retailer_name,
+        type,
+        country,
             {{ scd2_hash([
                 'retailer_code',
                 'retailer_name',        
                 'type',
                 'country'
             ]) }} as scd2_hash
-    from    {{ ref('t_stg_go_retailers') }}
+    from {{ ref('t_stg_go_retailers') }}
 )
 
 {% if is_incremental() %},
@@ -107,15 +117,16 @@ select * from updates
 
 {% else %}
 
-select      nextval('seq_dim_retailer_sk') as dim_retailer_sk,
-            retailer_code,
-            retailer_name,
-            type,
-            country,
-            scd2_hash,
-            {{ start_ts }}  as start_ts,
-            {{ high_date_ts }}as end_ts
-from        current_data
-order by    retailer_code
+    select
+        nextval('seq_dim_retailer_sk') as dim_retailer_sk,
+        retailer_code,
+        retailer_name,
+        type,
+        country,
+        scd2_hash,
+        {{ start_ts }} as start_ts,
+        {{ high_date_ts }}as as end_ts
+    from current_data
+    order by retailer_code
 
 {% endif %}

@@ -1,19 +1,28 @@
-/*-------------------------------------------------------------------------------
-Program:        t_fct_sales
-Project:        duckdb-core-sample-go-sales
-Description:    Fact table for GO Sales with surrogate keys from dimensions
-Input(s):       stg.t_stg_go_daily_sales
-Output(s):      fct.t_fct_sales
-Author:         Manzar Ahmed
-First Created:  Jun 2025
---------------------------------------------------------------------------------
-Program history:
---------------------------------------------------------------------------------
-Date        Programmer             Description
-----------  ---------------------  ---------------------------------------------
-2025-06-11  Manzar Ahmed           v0.01/Initial version
--------------------------------------------------------------------------------*/
-
+/*
+  ******************************************************************************
+  *               _____          _____       _                                 *
+  *              / ____|        / ____|     | |                                *
+  *             | |  __  ___   | (___   __ _| | ___  ___                       *
+  *             | | |_ |/ _ \   \___ \ / _` | |/ _ \/ __|                      *
+  *             | |__| | (_) |  ____) | (_| | |  __/\__ \                      *
+  *              \_____|\___/  |_____/ \__,_|_|\___||___/                      *
+  *                                                                            *
+  ******************************************************************************
+  * Path:           models/03-det
+  * Program:        t_fct_sales.sql
+  * Project:        dbt_core_sample_duckdb
+  * Description:    Fact table for GO Sales with surrogate keys from dimensions
+  *                 key and change hash
+  * Author:         Manzar Ahmed
+  * First Created:  Jun 2025
+  ******************************************************************************
+  * Program history:
+  ******************************************************************************
+  * Date        Programmer             Description
+  * ----------  ---------------------- -----------------------------------------
+  * 2025-06-11  Manzar Ahmed           v0.01/Initial version
+  ******************************************************************************
+*/
 {{ config(
     materialized='incremental',
     schema='det',
@@ -44,7 +53,6 @@ with base as (
 
 joined as (
     select
-        nextval('seq_fct_sales_sk') as fct_sales_sk,
         r.dim_retailer_sk,
         p.dim_product_sk,
         m.dim_order_method_sk,
@@ -52,17 +60,20 @@ joined as (
         b.quantity,
         b.unit_price,
         b.unit_sale_price,
+        nextval('seq_fct_sales_sk') as fct_sales_sk,
         getvariable('current_ts') as create_ts,
         getvariable('current_ts') as update_ts
     from base as b
-        left join {{ ref('t_dim_retailers') }} as r
-            on b.retailer_code = r.retailer_code
+    left join {{ ref('t_dim_retailers') }} as r
+        on
+            b.retailer_code = r.retailer_code
             and r.end_ts = ('{{ high_date }}')::timestamp
-        left join {{ ref('t_dim_products') }} as p
-            on b.product_number = p.product_number
+    left join {{ ref('t_dim_products') }} as p
+        on
+            b.product_number = p.product_number
             and p.end_ts = ('{{ high_date }}')::timestamp
-        left join {{ ref('t_dim_order_methods') }} as m
-            on b.order_method_code = m.order_method_code
+    left join {{ ref('t_dim_order_methods') }} as m
+        on b.order_method_code = m.order_method_code
 )
 
 select

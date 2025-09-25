@@ -1,19 +1,28 @@
-/*------------------------------------------------------------------------------
-Program:        t_dim_order_methods
-Project:        duckdb-core-sample-go-sales
-Description:    SCD1 dimension model for GO Sales order methods with surrogate
-                key and audit columns
-Input(s):       stg.t_stg_go_methods
-Output(s):      det.t_dim_order_methods
-Author:         Manzar Ahmed
-First Created:  Jun 2025
---------------------------------------------------------------------------------
-Program history:
---------------------------------------------------------------------------------
-Date        Programmer             Description
-----------  ---------------------  ---------------------------------------------
-2025-06-11  Manzar Ahmed           v0.01/Initial version
--------------------------------------------------------------------------------*/
+/*
+  ******************************************************************************
+  *               _____          _____       _                                 *
+  *              / ____|        / ____|     | |                                *
+  *             | |  __  ___   | (___   __ _| | ___  ___                       *
+  *             | | |_ |/ _ \   \___ \ / _` | |/ _ \/ __|                      *
+  *             | |__| | (_) |  ____) | (_| | |  __/\__ \                      *
+  *              \_____|\___/  |_____/ \__,_|_|\___||___/                      *
+  *                                                                            *
+  ******************************************************************************
+  * Path:           models/03-det
+  * Program:        t_dim_order_methods
+  * Project:        dbt_core_sample_duckdb
+  * Description:    SCD1 dimension model for GO Sales order methods with 
+  *                 surrogate key and audit columns
+  * Author:         Manzar Ahmed
+  * First Created:  Jul 2025
+  ******************************************************************************
+  * Program history:
+  ******************************************************************************
+  * Date        Programmer             Description
+  * ----------  ---------------------- -----------------------------------------
+  * 2025-07-06  Manzar Ahmed           v0.01/Initial version
+  ******************************************************************************
+*/
 
 {{ config(
     materialized = 'incremental',

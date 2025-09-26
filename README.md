@@ -7,7 +7,7 @@
 <img alt="Python" src="https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white" height="25px"/>
 > **_NOTE:_**  ✅ **CI/CD Integration**: This repository now includes static code analysis via [Pylint](https://pylint.pycqa.org/) and quality gate validation via [SonarCloud](https://sonarcloud.io/summary/new_code?id=manz01_dbt-core-sample-duckdb)..
 
-<img src="markdown_images/GO_SALES_LOGO.png" alt="GO Sales Logo" width="500px" />
+<img src="assets/GO_SALES_LOGO.png" alt="GO Sales Logo" width="500px" />
 
 # Go Sales 🦆 DuckDB dbt Sample Project
 This repository contains a sample dbt project that demonstrates how to model and transform the GO Sales IBM sample data using dbt (data build tool) with DuckDB as the database engine. 
@@ -47,13 +47,13 @@ This repository contains a sample dbt project that demonstrates how to model and
 ## 1. Background <a id="1"></a>
 The GO Sales IBM sample data is a fictional retail dataset designed to demonstrate business analytics, reporting, and data warehousing techniques. It simulates sales operations for a global retailer and contains various interconnected tables that model business domains. A copy of the entity relationship diagram is provided below for reference.
 
-<img src="markdown_images/go-sales-erd.png" alt="GO Sales Entity Relationship Diagram" width="1000px" />
+<img src="assets/go-sales-erd.png" alt="GO Sales Entity Relationship Diagram" width="1000px" />
 
 ## 2. High Level Design <a id="2"></a>
 
 The dbt-core project follows a **layered design architecture** that systematically structures data transformations through a series of increasingly refined stages. This layered approach promotes modularity, reusability, and transparency in the data pipeline.
 
-<img src="markdown_images/hld-duckdb-dbt-sample.png" alt="High Level Design" width="1000px">
+<img src="assets/hld-duckdb-dbt-sample.png" alt="High Level Design" width="1000px">
 
 ### Layer Breakdown:
 
@@ -175,7 +175,7 @@ The diagram includes paths from:
 
 The following diagram provides a visual representation of the dbt model lineage for the GO Sales project, illustrating how raw data flows through staging, dimension, fact, and mart layers:
 
-![](markdown_images/gosales-dbt-dag.png)
+![](assets/gosales-dbt-dag.png)
 
 # 5. Low-Level Design (LLD) <a id="5"></a>
 

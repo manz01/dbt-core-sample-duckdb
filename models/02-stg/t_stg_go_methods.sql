@@ -20,10 +20,11 @@
   * Date        Programmer             Description
   * ----------  ---------------------- -----------------------------------------
   * 2025-06-11  Manzar Ahmed           v0.01/Initial version
+  * 2025-06-12  Manzar Ahmed           v0.02/Run from seed instead of source
   ******************************************************************************
 */
 
 select
     "Order method code" as order_method_code,
     "Order method type" as order_method_type
-from {{ ref('t_raw_go_methods') }}
+from {{ ref('ref_go_methods') }}

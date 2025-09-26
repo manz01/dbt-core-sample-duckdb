@@ -15,8 +15,8 @@ analysis-paths: ["analyses"]
 test-paths: ["tests"]
 seed-paths: ["seeds"]
 macro-paths: ["macros"]
-snapshot-paths: ["snapshots"]
-
+docs-paths: ["docs"]      
+asset-paths: ["assets"]   
 clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
@@ -29,16 +29,26 @@ clean-targets:         # directories to be removed by `dbt clean`
 # directory as views. These settings can be overridden in the individual model
 # files using the `{{ config(...) }}` macro.
 models:
-  01-raw:
-    +schema: raw
-    +materialized: table
-  02-stg:
-    +schema: stg
-    +materialized: view
-  03-det:
-    +schema: det
-    +materialized: incremental
-    +incremental_strategy: merge
-  04-mrt:
-    +schema: mrt
-    +materialized: table
+  dbt_core_sample_duckdb:
+    01-raw:
+      +schema: raw
+      +materialized: table
+    02-stg:
+      +schema: stg
+      +materialized: view
+    03-det:
+      +schema: det
+      +materialized: incremental
+      +incremental_strategy: merge
+    04-mrt:
+      +schema: mrt
+      +materialized: table
+
+seeds:
+  +schema: raw
+
+  ref_go_methods:            
+    +quote_columns: true
+    +column_types:
+      "Order method code": integer   # keys with spaces must be quoted in YAML
+      "Order method type": varchar

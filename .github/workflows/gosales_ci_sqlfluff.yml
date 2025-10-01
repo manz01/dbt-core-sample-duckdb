@@ -69,6 +69,7 @@ jobs:
         run: |
           set -o pipefail
           set +e
+          
           sqlfluff lint models/ \
             --templater dbt \
             --dialect duckdb \
@@ -86,11 +87,9 @@ jobs:
           DBT_PROFILES_DIR: ~/.dbt
         run: |
           set +e
-          sqlfluff lint models/ \
-            --templater dbt \
-            --dialect duckdb \
-            --format human --nocolor --verbose 2 \
-            | tee sqlfluff_human.log
+          sqlfluff lint --dialect duckdb models/
+            --format human --nocolor --verbose 2 
+            
           set -e
 
       # (nice to have) Add a short markdown summary to the run

@@ -45,10 +45,4 @@ models:
       +materialized: table
 
 seeds:
-  +schema: raw
-
-  ref_go_methods:            
-    +quote_columns: true
-    +column_types:
-      "Order method code": integer   # keys with spaces must be quoted in YAML
-      "Order method type": varchar
+  +schema: ref

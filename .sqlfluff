@@ -1,6 +1,6 @@
-
+#-------------------------------------------------------------------------------
 #  Prerequisites:
-#  -----------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 #  1. Install SQLFluff support:
 #     pip install sqlfluff
 #
@@ -9,13 +9,15 @@
 #
 #  3. (Optional) Install pre-commit for local checks:
 #     pip install pre-commit
-#  -----------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 #  Example usage:  
 #
 #  1. All files in models/ directory:
 #  sqlfluff lint --dialect duckdb models/
 #
 #  sqlfluff fix --dialect duckdb models/
+#-------------------------------------------------------------------------------
+
 [sqlfluff]
 dialect = duckdb
 templater = dbt

@@ -93,13 +93,13 @@ jobs:
           set -e
 
       # (nice to have) Add a short markdown summary to the run
-      - name: Publish step summary
-        run: |
-          echo "## SQLFluff Summary" >> "$GITHUB_STEP_SUMMARY"
-          echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "\`\`\`" >> "$GITHUB_STEP_SUMMARY"
-          sed -n '1,200p' sqlfluff_human.log >> "$GITHUB_STEP_SUMMARY"
-          echo "\`\`\`" >> "$GITHUB_STEP_SUMMARY"
+      # - name: Publish step summary
+      #   run: |
+      #     echo "## SQLFluff Summary" >> "$GITHUB_STEP_SUMMARY"
+      #     echo "" >> "$GITHUB_STEP_SUMMARY"
+      #     echo "\`\`\`" >> "$GITHUB_STEP_SUMMARY"
+      #     sed -n '1,200p' sqlfluff_human.log >> "$GITHUB_STEP_SUMMARY"
+      #     echo "\`\`\`" >> "$GITHUB_STEP_SUMMARY"
 
       # 3) Post PR annotations even if lint failed
       - name: Annotate PR with SQLFluff output

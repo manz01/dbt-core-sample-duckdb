@@ -36,9 +36,9 @@ dim_dates as (
     select
         cast(full_date as date) as date_key,
         full_date,
-        cast(strftime('%Y', full_date) as integer) as year,
-        cast(strftime('%m', full_date) as integer) as month,
-        cast(strftime('%d', full_date) as integer) as day,
+        cast(strftime('%Y', full_date) as integer) as date_year,
+        cast(strftime('%m', full_date) as integer) as date_month,
+        cast(strftime('%d', full_date) as integer) as date_day,
         cast(strftime('%W', full_date) as integer) as week_of_year,
         cast(strftime('%w', full_date) as integer) as weekday_number,
         cast(strftime('%j', full_date) as integer) as day_of_year,
@@ -51,8 +51,10 @@ dim_dates as (
             ) as integer
         ) as quarter_label,
         coalesce(strftime('%w', full_date) in ('0', '6'), false) as is_weekend,
-        coalesce(strftime('%w', full_date) in ('1', '2', '3', '4', '5'),
-        false) as is_weekday
+        coalesce(
+            strftime('%w', full_date) in ('1', '2', '3', '4', '5'),
+            false
+        ) as is_weekday
     from date_span
 )
 

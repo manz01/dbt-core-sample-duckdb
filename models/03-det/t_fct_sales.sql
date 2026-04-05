@@ -24,14 +24,18 @@
   ******************************************************************************
 */
 {{ config(
-    materialized='incremental',
-    schema='det',
-    unique_key='fct_sales_sk',
-    on_schema_change='sync_all_columns',
-    pre_hook=["create sequence if not exists seq_fct_sales_sk start 1 increment 1"]
+    materialized = 'incremental',
+    schema = 'det',
+    unique_key = 'fct_sales_sk',
+    on_schema_change = 'sync_all_columns',
+    pre_hook = [
+        "create sequence if not exists seq_fct_sales_sk start 1 increment 1"
+    ]
 ) }}
 
-{% do run_query("SET VARIABLE current_ts = (SELECT date_trunc('second', current_timestamp));") %}
+{% do run_query(
+    "SET VARIABLE current_ts = (SELECT date_trunc('second', current_timestamp));"
+) %}
 {%- set high_date = '9999-12-31 00:00:00' %}
 
 with base as (
@@ -44,11 +48,6 @@ with base as (
         s.unit_price,
         s.unit_sale_price
     from {{ ref('t_stg_go_daily_sales') }} as s
-    order by
-        s.transaction_date,
-        s.retailer_code,
-        s.product_number,
-        s.order_method_code
 ),
 
 joined as (

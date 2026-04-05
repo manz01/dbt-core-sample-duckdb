@@ -11,7 +11,7 @@
   * Path:           models/03-det
   * Program:        t_dim_product.sql
   * Project:        dbt_core_sample_duckdb
-  * Description:    SCD2 dimension model for GO Sales products with surrogate 
+  * Description:    SCD2 dimension model for GO Sales products with surrogate
   *                 key and change hash
   * Author:         Manzar Ahmed
   * First Created:  Jul 2025
@@ -21,13 +21,13 @@
   * Date        Programmer             Description
   * ----------  ---------------------- -----------------------------------------
   * 2025-06-11  Manzar Ahmed           v0.01/Initial version
-  * 2025-06-23  Manzar Ahmed           v0.02/Utilising SCD2 vars for start and 
+  * 2025-06-23  Manzar Ahmed           v0.02/Utilising SCD2 vars for start and
   *                                    end timestamps
   * 2025-06-23  Manzar Ahmed           v0.03/SonarQube issues fixed:
-  *                                    Define a constant instead of duplicating 
+  *                                    Define a constant instead of duplicating
   *                                    this literal 5 times (plsql:S1192)
-  * 2025-07-07  Manzar Ahmed           v0.04/Added version number, 
-  *                                    current_version and prior surrogate key 
+  * 2025-07-07  Manzar Ahmed           v0.04/Added version number,
+  *                                    current_version and prior surrogate key
   *                                    to SCD2
   * 2025-08-07  Manzar Ahmed           v0.05/scd2 enhancements, added
   ******************************************************************************
@@ -141,7 +141,8 @@ with current_data as (
 
 {% else %}
 
-select  nextval('seq_dim_product_sk') as dim_product_sk,
+    select
+        nextval('seq_dim_product_sk') as dim_product_sk,
         product_number,
         product_line,
         product_type,
@@ -156,7 +157,6 @@ select  nextval('seq_dim_product_sk') as dim_product_sk,
         1 as version_number,
         true as current_version,
         -1 as prior_dim_product_sk
-from    current_data
-order by product_number
+    from current_data
 
 {% endif %}

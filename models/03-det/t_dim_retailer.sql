@@ -11,7 +11,7 @@
   * Path:           models/03-det
   * Program:        t_dim_retailer.sql
   * Project:        dbt_core_sample_duckdb
-  * Description:    SCD2 dimension model for GO Sales retailers with surrogate 
+  * Description:    SCD2 dimension model for GO Sales retailers with surrogate
   *                 key and change hash
   * Author:         Manzar Ahmed
   * First Created:  Jun 2025
@@ -21,10 +21,10 @@
   * Date        Programmer             Description
   * ----------  ---------------------- -----------------------------------------
   * 2025-06-11  Manzar Ahmed           v0.01/Initial version
-  * 2025-06-23  Manzar Ahmed           v0.02/Utilising SCD2 vars for start and 
+  * 2025-06-23  Manzar Ahmed           v0.02/Utilising SCD2 vars for start and
   *                                    end timestamps
   * 2025-06-23  Manzar Ahmed           v0.03/SonarQube issues fixed:
-  *                                    Define a constant instead of duplicating 
+  *                                    Define a constant instead of duplicating
   *                                    this literal 5 times (plsql:S1192)
   * 2025-08-07  Manzar Ahmed           v0.04/scd2 enhancements, added
   ******************************************************************************
@@ -125,8 +125,7 @@ select * from updates
         country,
         scd2_hash,
         {{ start_ts }} as start_ts,
-        {{ high_date_ts }}as as end_ts
+        {{ high_date_ts }} as end_ts
     from current_data
-    order by retailer_code
 
 {% endif %}

@@ -24,14 +24,18 @@
   ******************************************************************************
 */
 {{ config(
-    materialized='incremental',
-    schema='det',
-    unique_key='fct_sales_sk',
-    on_schema_change='sync_all_columns',
-    pre_hook=["create sequence if not exists seq_fct_sales_sk start 1 increment 1"]
+    materialized = 'incremental',
+    schema = 'det',
+    unique_key = 'fct_sales_sk',
+    on_schema_change = 'sync_all_columns',
+    pre_hook = [
+        "create sequence if not exists seq_fct_sales_sk start 1 increment 1"
+    ]
 ) }}
 
-{% do run_query("SET VARIABLE current_ts = (SELECT date_trunc('second', current_timestamp));") %}
+{% do run_query(
+    "SET VARIABLE current_ts = (SELECT date_trunc('second', current_timestamp));"
+) %}
 {%- set high_date = '9999-12-31 00:00:00' %}
 
 with base as (
@@ -44,11 +48,6 @@ with base as (
         s.unit_price,
         s.unit_sale_price
     from {{ ref('t_stg_go_daily_sales') }} as s
-    order by
-        s.transaction_date,
-        s.retailer_code,
-        s.product_number,
-        s.order_method_code
 ),
 
 joined as (
@@ -64,15 +63,15 @@ joined as (
         getvariable('current_ts') as create_ts,
         getvariable('current_ts') as update_ts
     from base as b
-    left join {{ ref('t_dim_retailers') }} as r
+    left join {{ ref('t_dim_retailer') }} as r
         on
             b.retailer_code = r.retailer_code
             and r.end_ts = ('{{ high_date }}')::timestamp
-    left join {{ ref('t_dim_products') }} as p
+    left join {{ ref('t_dim_product') }} as p
         on
             b.product_number = p.product_number
             and p.end_ts = ('{{ high_date }}')::timestamp
-    left join {{ ref('t_dim_order_methods') }} as m
+    left join {{ ref('t_dim_order_method') }} as m
         on b.order_method_code = m.order_method_code
 )
 

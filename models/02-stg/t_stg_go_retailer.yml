@@ -1,6 +1,6 @@
 version: 2
 models:
-  - name: t_stg_go_retailers 
+  - name: t_stg_go_retailer 
     description: "This model contains the details of retailers including their unique codes and names." 
     config:
       materialized: table  
@@ -42,4 +42,3 @@ models:
       - name: total_orders  
         description: "Total number of orders placed by the retailer"
       - name: total_sales           
-

@@ -9,7 +9,7 @@
   *                                                                            *
   ******************************************************************************
   * Path:           models/02-stg
-  * Program:        t_stg_go_methods.sql
+  * Program:        t_stg_go_method.sql
   * Project:        dbt_core_sample_duckdb
   * Description:    Staging model for GO Sales order methods
   * Author:         Manzar Ahmed

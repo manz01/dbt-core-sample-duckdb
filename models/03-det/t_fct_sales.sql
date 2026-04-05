@@ -64,15 +64,15 @@ joined as (
         getvariable('current_ts') as create_ts,
         getvariable('current_ts') as update_ts
     from base as b
-    left join {{ ref('t_dim_retailers') }} as r
+    left join {{ ref('t_dim_retailer') }} as r
         on
             b.retailer_code = r.retailer_code
             and r.end_ts = ('{{ high_date }}')::timestamp
-    left join {{ ref('t_dim_products') }} as p
+    left join {{ ref('t_dim_product') }} as p
         on
             b.product_number = p.product_number
             and p.end_ts = ('{{ high_date }}')::timestamp
-    left join {{ ref('t_dim_order_methods') }} as m
+    left join {{ ref('t_dim_order_method') }} as m
         on b.order_method_code = m.order_method_code
 )
 

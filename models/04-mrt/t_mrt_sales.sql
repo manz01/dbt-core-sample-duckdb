@@ -31,18 +31,18 @@ with fact as (
 
 order_methods as (
     select *
-    from {{ ref('t_dim_order_methods') }}
+    from {{ ref('t_dim_order_method') }}
 ),
 
 product as (
     select *
-    from {{ ref('t_dim_products') }}
+    from {{ ref('t_dim_product') }}
     where end_ts = ('{{ high_date }}')::timestamp
 ),
 
 retailer as (
     select *
-    from {{ ref('t_dim_retailers') }}
+    from {{ ref('t_dim_retailer') }}
     where end_ts = ('{{ high_date }}')::timestamp
 )
 

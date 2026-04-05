@@ -1,6 +1,6 @@
 version: 2
 models:
-  - name: t_stg_go_products
+  - name: t_stg_go_product
     config:
       materialized: table  
       schema: stg

@@ -9,9 +9,9 @@
   *                                                                            *
   ******************************************************************************
   * Path:           models/03-det
-  * Program:        t_dim_dates.sql
+  * Program:        t_dim_date.sql
   * Project:        dbt_core_sample_duckdb
-  * Description:    Staging model for GO Sales products
+  * Description:    Dimension model for GO Sales dates
   * Author:         Manzar Ahmed
   * First Created:  Jul 2025
   ******************************************************************************

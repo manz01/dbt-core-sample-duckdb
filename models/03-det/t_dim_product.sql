@@ -9,7 +9,7 @@
   *                                                                            *
   ******************************************************************************
   * Path:           models/03-det
-  * Program:        t_dim_products.sql
+  * Program:        t_dim_product.sql
   * Project:        dbt_core_sample_duckdb
   * Description:    SCD2 dimension model for GO Sales products with surrogate 
   *                 key and change hash
@@ -58,7 +58,7 @@ with current_data as (
             'cast(unit_cost as decimal(18,2))',
             'cast(unit_price as decimal(18,2))'
         ]) }} as scd2_hash
-    from {{ ref('t_stg_go_products') }}
+    from {{ ref('t_stg_go_product') }}
 )
 
 {% if is_incremental() %}

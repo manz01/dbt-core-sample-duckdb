@@ -18,3 +18,4 @@ models/99-test/*
 snapshots/go-sales/snapshot_dim_products.sql
 .gitignore
 snapshots/go-sales/snapshot_dim_products.yml
+dbt_internal_packages/

@@ -9,7 +9,7 @@
   *                                                                            *
   ******************************************************************************
   * Path:           models/02-stg
-  * Program:        t_stg_go_products.sql
+  * Program:        t_stg_go_product.sql
   * Project:        dbt_core_sample_duckdb
   * Description:    Staging model for GO Sales products
   * Author:         Manzar Ahmed

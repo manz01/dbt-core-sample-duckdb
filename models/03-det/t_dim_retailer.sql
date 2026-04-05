@@ -9,7 +9,7 @@
   *                                                                            *
   ******************************************************************************
   * Path:           models/03-det
-  * Program:        t_det_go_retailers.sql
+  * Program:        t_dim_retailer.sql
   * Project:        dbt_core_sample_duckdb
   * Description:    SCD2 dimension model for GO Sales retailers with surrogate 
   *                 key and change hash
@@ -53,7 +53,7 @@ with current_data as (
                 'type',
                 'country'
             ]) }} as scd2_hash
-    from {{ ref('t_stg_go_retailers') }}
+    from {{ ref('t_stg_go_retailer') }}
 )
 
 {% if is_incremental() %},

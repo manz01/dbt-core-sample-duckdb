@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: t_dim_dates
+  - name: t_dim_date
     description: >
       Dimension table for dates used in GO Sales data warehouse. Contains date attributes
       such as year, month, day, quarter, and fiscal year.

@@ -9,7 +9,7 @@
   *                                                                            *
   ******************************************************************************
   * Path:           models/03-det
-  * Program:        t_dim_order_methods
+  * Program:        t_dim_order_method
   * Project:        dbt_core_sample_duckdb
   * Description:    SCD1 dimension model for GO Sales order methods with 
   *                 surrogate key and audit columns
@@ -37,7 +37,7 @@ with source_data as (
     select
         order_method_code,
         order_method_type
-    from {{ ref('t_stg_go_methods') }}
+    from {{ ref('t_stg_go_method') }}
     order by order_method_code
 )
 

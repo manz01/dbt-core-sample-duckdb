@@ -9,7 +9,7 @@
   *                                                                            *
   ******************************************************************************
   * Path:           models/02-stg
-  * Program:        t_stg_go_products.sql
+  * Program:        t_stg_go_product.sql
   * Project:        dbt_core_sample_duckdb
   * Description:    Staging model for GO Sales products
   * Author:         Manzar Ahmed
@@ -28,24 +28,25 @@ with stg_products as (
         "Product number" as product_number,
         "Product line" as product_line,
         "Product type" as product_type,
-        "product" as product,
+        product,
         "Product brand" as product_brand,
         "Product color" as product_color,
         "Unit cost" as unit_cost,
         "Unit price" as unit_price
     from {{ ref('t_raw_go_products') }}
     qualify row_number() over (
-        partition by 
+        partition by
             product_number,
             product_line,
             product_type,
             product,
             product_brand,
-            product_color,
+            product_color
         order by
             product_number desc
-        ) = 1    
+    ) = 1
 )
+
 select
     product_number,
     product_line,

@@ -10,7 +10,7 @@
 #----------------------------------------------------------------------------
 version: 2
 models:
-  - name: t_stg_go_methods
+  - name: t_stg_go_method
     config:
       materialized: table  
       schema: stg
@@ -31,4 +31,3 @@ models:
         description: "Price per unit of the product at the time of sale"
       - name: unit_sale_price
         description: "Sale price per unit of the product at the time of sale"
-

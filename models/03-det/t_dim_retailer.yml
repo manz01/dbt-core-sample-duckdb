@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: t_dim_retailers
+  - name: t_dim_retailer
     description: "SCD2 dimension model for GO Sales retailers"
     config:
       materialized: incremental

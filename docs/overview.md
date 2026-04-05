@@ -1,3 +1,5 @@
+{% docs __overview__ %}
+
 [![GOSALES CI - Flake8 & Pylint](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_pylint.yml/badge.svg)](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_pylint.yml)
 [![GOSALES CI - SonarCloud](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_sonarcloud.yml/badge.svg)](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_sonarcloud.yml)
 <br>
@@ -250,3 +252,5 @@ The following diagram provides a visual representation of the dbt model lineage 
 | 1  | [`__init__.py`](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/shared_utils/__init__.py)      | Python File|  Marks the directory as a Python package          |
 | 2  | [`config.py`](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/shared_utils/config.py)          |Python File| Contains shared configuration values and helpers |
 | 3  | [`db_utils.py`](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/shared_utils/db_utils.py)      |Python File| Utility functions for database access and queries |
+
+{% enddocs %}

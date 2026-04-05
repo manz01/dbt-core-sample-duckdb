@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: t_dim_order_methods
+  - name: t_dim_order_method
     description: "SCD1 dimension model for GO Sales order methods with surrogate key and audit columns"
     config:
       materialized: incremental

@@ -1,11 +1,12 @@
 [![GOSALES CI - Flake8 & Pylint](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_pylint.yml/badge.svg)](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_pylint.yml)
 [![GOSALES CI - SonarCloud](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_sonarcloud.yml/badge.svg)](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_sonarcloud.yml)
+[![GOSALES CI - SQLFluff](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_sqlfluff.yml/badge.svg)](https://github.com/manz01/dbt-core-sample-duckdb/actions/workflows/gosales_ci_sqlfluff.yml)
 <br>
 <img alt="SQL" src="https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=sqlite&logoColor=white" height="25px"/>
 <img alt="dbt" src="https://img.shields.io/badge/dbt-FD6D6D?style=for-the-badge&logo=dbt&logoColor=white" height="25px"/>
 <img alt="DuckDB" src="https://img.shields.io/badge/DuckDB-FFF500?style=for-the-badge&logo=duckduckgo&logoColor=black" height="25px"/>
 <img alt="Python" src="https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white" height="25px"/>
-> **_NOTE:_**  ✅ **CI/CD Integration**: This repository now includes static code analysis via [Pylint](https://pylint.pycqa.org/) and quality gate validation via [SonarCloud](https://sonarcloud.io/summary/new_code?id=manz01_dbt-core-sample-duckdb)..
+> **_NOTE:_**  ✅ **CI/CD Integration**: This repository now includes static code analysis via [Pylint](https://pylint.pycqa.org/), SQL linting via [SQLFluff](https://sqlfluff.com/) (non-blocking advisory checks), and quality gate validation via [SonarCloud](https://sonarcloud.io/summary/new_code?id=manz01_dbt-core-sample-duckdb).
 
 <img src="assets/GO_SALES_LOGO.png" alt="GO Sales Logo" width="500px" />
 
@@ -197,16 +198,16 @@ The following diagram provides a visual representation of the dbt model lineage 
 
 | #  | Object Name                                 | Object Type | Description                             |
 |----|---------------------------------------------|-------------|-----------------------------------------|
-| 1  | [t_dim_date.sql](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_dim_date.sql)              | SQL File    | Staging logic for date dimension        |
-| 2  | [t_dim_date.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_dim_date.yml)             | YAML File   | Metadata/config for date dimension      |
-| 3  | [t_dim_order_method.sql](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_dim_order_method.sql)     | SQL File    | Staging logic for order methods         |
-| 4  | [t_dim_order_method.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_dim_order_method.yml)    | YAML File   | Metadata/config for order methods       |
-| 5  | [t_dim_product.sql](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_dim_product.sql)          | SQL File    | Staging logic for products              |
-| 6  | [t_dim_product.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_dim_product.yml)         | YAML File   | Metadata/config for products            |
-| 7  | [t_dim_retailer.sql](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_dim_retailer.sql)         | SQL File    | Staging logic for retailers             |
-| 8  | [t_dim_retailer.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_dim_retailer.yml)        | YAML File   | Metadata/config for retailers           |
-| 9  | [t_fct_sales.sql](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_fct_sales.sql)              | SQL File    | Staging logic for sales fact table      |
-| 10 | [t_fct_sales.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_fct_sales.yml)             | YAML File   | Metadata/config for sales fact table    |
+| 1  | [t_stg_go_1k.sql](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_stg_go_1k.sql)              | SQL File    | Staging logic for GO 1k sample data     |
+| 2  | [t_stg_go_1k.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_stg_go_1k.yml)             | YAML File   | Metadata/config for GO 1k staging model |
+| 3  | [t_stg_go_daily_sales.sql](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_stg_go_daily_sales.sql)     | SQL File    | Cleanses daily sales feed               |
+| 4  | [t_stg_go_daily_sales.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_stg_go_daily_sales.yml)    | YAML File   | Metadata/config for daily sales staging |
+| 5  | [t_stg_go_method.sql](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_stg_go_method.sql)          | SQL File    | Staging logic for order methods         |
+| 6  | [t_stg_go_method.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_stg_go_method.yml)         | YAML File   | Metadata/config for order methods       |
+| 7  | [t_stg_go_product.sql](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_stg_go_product.sql)         | SQL File    | Staging logic for products              |
+| 8  | [t_stg_go_product.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_stg_go_product.yml)        | YAML File   | Metadata/config for products            |
+| 9  | [t_stg_go_retailer.sql](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_stg_go_retailer.sql)         | SQL File    | Staging logic for retailers             |
+| 10 | [t_stg_go_retailer.yml](https://github.com/manz01/dbt-core-sample-duckdb/blob/dbt-core-sample-duckdb/models/02-stg/t_stg_go_retailer.yml)        | YAML File   | Metadata/config for retailers           |
 
 ---
 

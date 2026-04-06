@@ -73,7 +73,7 @@ The dbt-core project follows a **layered design architecture** that systematical
 
 ```text
  +------------------+  +--------------+
- |t_dim_order_method|  |t_dim_product|
+ |t_dim_order_method|  |t_dim_product |
  +------------------+  +--------------+                 
          \              /
           \            /
@@ -83,7 +83,7 @@ The dbt-core project follows a **layered design architecture** that systematical
            /          \
           /            \
    +-----------+    +---------------+
-   |t_dim_date|    |t_dim_retailer|
+   |t_dim_date |    |t_dim_retailer |
    +-----------+    +---------------+
 ```
 4. **Mart Layer (`mrt`)**  
